@@ -1,30 +1,31 @@
 import {useState} from "react";
-import {type Bill, type BillItem, printBill} from "../controllers/PrintBillController.ts";
+import {successNotification, errorNotification} from "../util/alert";
+import {printBill} from "../controllers/PrintBillController";
+import type {Bill} from "../models/Bill";
+import type {BillItem} from "../models/BillItem";
 
 export default function PrintBill() {
     const [receiptNo, setReceiptNo] = useState("");
     const [date, setDate] = useState("");
     const [cashier, setCashier] = useState("");
 
-    const [itemName, setItemName] = useState("");
+    const [name, setName] = useState("");
     const [qty, setQty] = useState(1);
     const [unitPrice, setUnitPrice] = useState(0);
 
     const [items, setItems] = useState<BillItem[]>([]);
-
     const [serviceCharge, setServiceCharge] = useState(0);
     const [discount, setDiscount] = useState(0);
 
     const [showPreview, setShowPreview] = useState(false);
 
-
     const addItem = () => {
-        if (!itemName || qty <= 0 || unitPrice <= 0) {
-            alert("Please enter valid item details.");
+        if (!name || qty <= 0 || unitPrice <= 0) {
+            errorNotification("Please enter valid item details");
             return;
         }
         const item: BillItem = {
-            name: itemName,
+            name: name,
             qty,
             unitPrice,
             total: qty * unitPrice
@@ -32,11 +33,10 @@ export default function PrintBill() {
 
         setItems([...items, item]);
 
-        setItemName("");
+        setName("");
         setQty(1);
         setUnitPrice(0);
     };
-
 
     const subTotal = items.reduce(
         (sum, item) => sum + item.total,
@@ -44,7 +44,6 @@ export default function PrintBill() {
     );
 
     const total = subTotal + serviceCharge - discount;
-
 
     const bill: Bill = {
         receiptNo,
@@ -57,22 +56,19 @@ export default function PrintBill() {
         total
     };
 
-
     const confirmPrint = async () => {
         try {
             await printBill(bill);
-            alert("Bill Printed Successfully");
+            successNotification("Bill Printed Successfully");
             setShowPreview(false);
         } catch (error) {
-            console.error(error);
-            alert("Printing Failed");
-
+            errorNotification("Printing Failed");
         }
     };
 
-
     return (
         <div className="min-h-screen bg-gray-100 p-10">
+
             <div className="max-w-4xl mx-auto bg-white shadow rounded-lg p-6">
                 <h1 className="text-3xl font-bold text-center mb-6">
                     Print Bill
@@ -98,15 +94,14 @@ export default function PrintBill() {
                         onChange={(e) => setCashier(e.target.value)}
                         className="border rounded p-2"
                     />
-
                 </div>
 
                 {/* ITEM ADD */}
                 <div className="grid grid-cols-4 gap-4 mb-4">
                     <input
-                        placeholder="Item Name"
-                        value={itemName}
-                        onChange={(e) => setItemName(e.target.value)}
+                        placeholder="Name"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
                         className="border rounded p-2"
                     />
                     <input
@@ -124,7 +119,6 @@ export default function PrintBill() {
                     <button onClick={addItem} className="bg-green-600 text-white rounded">
                         Add Item
                     </button>
-
 
                 </div>
                 <table className="w-full border mb-6">
@@ -152,7 +146,6 @@ export default function PrintBill() {
                 </table>
 
                 <div className="grid grid-cols-2 gap-4">
-                    <div></div>
                     <div>
                         <div className="flex justify-between">
                             <span>Sub Total</span>
