@@ -16,14 +16,9 @@ public class PrinterService {
     @Autowired
     private PrinterConfig printerConfig;
 
-    public PrinterService(PrinterConfig printerConfig) {
-        this.printerConfig = printerConfig;
-    }
-
-    public void printBill(BillDTO billDTO) {
-        try (Socket socket = new Socket(printerConfig.getPrinterIp(), 9100);
+    public void printBill(BillDTO dto) {
+        try (Socket socket = new Socket(printerConfig.getPrinterIp(), printerConfig.getPrinterPort());
              OutputStream out = socket.getOutputStream()) {
-
 
             // Initialize printer
             out.write(new byte[]{0x1B, 0x40});
@@ -43,9 +38,9 @@ public class PrinterService {
             out.write(new byte[]{0x1B, 0x61, 0x00});
 
             StringBuilder sb = new StringBuilder();
-            sb.append(leftRight("Receipt", billDTO.getReceiptNo())).append("\n");
-            sb.append(leftRight("Date", billDTO.getDate())).append("\n");
-            sb.append(leftRight("Cashier", billDTO.getCashier())).append("\n");
+            sb.append(leftRight("Receipt", dto.getReceiptNo())).append("\n");
+            sb.append(leftRight("Date", dto.getDate())).append("\n");
+            sb.append(leftRight("Cashier", dto.getCashier())).append("\n");
 
             sb.append("-----------------------------------------------\n");
 
@@ -53,14 +48,14 @@ public class PrinterService {
 
             sb.append("-----------------------------------------------\n");
 
-            for (BillItemDTO item : billDTO.getItems()) {
-                String itemName = item.getName();
+            for (BillItemDTO item : dto.getItems()) {
+                String name = item.getName();
                 int maxWidth = 24;
 
-                if (itemName.length() <= maxWidth) {
-                    sb.append(String.format("%-24s %11d %10.2f\n", itemName, item.getQty(), item.getTotal()));
+                if (name.length() <= maxWidth) {
+                    sb.append(String.format("%-24s %11d %10.2f\n", name, item.getQty(), item.getTotal()));
                 } else {
-                    String[] words = itemName.split(" ");
+                    String[] words = name.split(" ");
                     StringBuilder firstLineName = new StringBuilder();
                     StringBuilder secondLineName = new StringBuilder();
 
@@ -92,10 +87,10 @@ public class PrinterService {
 
             sb.append("-----------------------------------------------\n");
 
-            sb.append(leftRight("Bill Amount", format(billDTO.getSubTotal()))).append("\n");
-            sb.append(leftRight("Service Charge", format(billDTO.getServiceCharge()))).append("\n");
-            sb.append(leftRight("Discount", format(billDTO.getDiscount()))).append("\n");
-            sb.append(leftRight("Total", format(billDTO.getTotal()))).append("\n");
+            sb.append(leftRight("Bill Amount", format(dto.getSubTotal()))).append("\n");
+            sb.append(leftRight("Service Charge", format(dto.getServiceCharge()))).append("\n");
+            sb.append(leftRight("Discount", format(dto.getDiscount()))).append("\n");
+            sb.append(leftRight("Total", format(dto.getTotal()))).append("\n");
 
             sb.append("-----------------------------------------------\n");
 

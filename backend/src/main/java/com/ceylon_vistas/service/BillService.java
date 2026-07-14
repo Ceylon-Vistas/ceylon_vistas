@@ -3,6 +3,7 @@ package com.ceylon_vistas.service;
 import com.ceylon_vistas.dto.BillDTO;
 import com.ceylon_vistas.entity.Bill;
 import com.ceylon_vistas.repository.BillRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,14 +11,17 @@ import java.util.List;
 @Service
 public class BillService {
 
-    private final BillRepository billRepository;
-
-    public BillService(BillRepository billRepository) {
-        this.billRepository = billRepository;
-    }
+    @Autowired
+    private BillRepository billRepository;
 
     public Bill saveBill(BillDTO dto) {
         Bill bill = new Bill();
+        bill.setReceiptNo(dto.getReceiptNo());
+        bill.setDate(dto.getDate());
+        bill.setCashier(dto.getCashier());
+        bill.setSubTotal(dto.getSubTotal());
+        bill.setServiceCharge(dto.getServiceCharge());
+        bill.setDiscount(dto.getDiscount());
         bill.setTotal(dto.getTotal());
         return billRepository.save(bill);
     }

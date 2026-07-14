@@ -1,16 +1,27 @@
 package com.ceylon_vistas.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 
-@Entity
+import java.util.List;
+
 @Data
+@Entity
+@Table(name = "Bills")
 public class Bill {
+
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String billNo;
+
+    private String receiptNo;
+    private String date;
+    private String cashier;
+    private double subTotal;
+    private double serviceCharge;
+    private double discount;
     private double total;
+
+    @OneToMany(mappedBy = "bill", cascade = CascadeType.ALL)
+    private List<BillItem> items;
 }

@@ -13,13 +13,9 @@ public class PrinterController {
     @Autowired
     private PrinterService printerService;
 
-    public PrinterController(PrinterService printerService) {
-        this.printerService = printerService;
-    }
-
     @PostMapping("/print")
-    public String printBill(@RequestBody BillDTO billDTO) {
-        printerService.printBill(billDTO);
+    public String printBill(@RequestBody BillDTO dto) {
+        printerService.printBill(dto);
         return "Bill Printed Successfully";
     }
 }
