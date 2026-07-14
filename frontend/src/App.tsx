@@ -1,10 +1,9 @@
-import {Routes, Route} from "react-router-dom";
-import Home from "../src/views/pages/Home";
+import PrintBill from "./views/PrintBill.tsx";
 
 export default function App() {
     return (
-        <Routes>
-            <Route path="/" element={<Home/>}/>
-        </Routes>
+        <div>
+            <PrintBill/>
+        </div>
     );
 }
