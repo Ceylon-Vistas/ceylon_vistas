@@ -6,6 +6,6 @@ import org.springframework.context.annotation.Configuration;
 @Data
 @Configuration
 public class PrinterConfig {
-    private final String printerIp = "192.168.1.69";
+    private final String printerIp = "192.168.1.6";
     private final int printerPort = 9100;
 }
