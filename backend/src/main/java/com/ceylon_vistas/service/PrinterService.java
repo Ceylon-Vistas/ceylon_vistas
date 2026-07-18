@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import java.io.OutputStream;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class PrinterService {
@@ -50,38 +52,45 @@ public class PrinterService {
 
             for (BillItemDTO item : dto.getItems()) {
                 String name = item.getName();
-                int maxWidth = 24;
+                int maxWidth = 30;
 
-                if (name.length() <= maxWidth) {
-                    sb.append(String.format("%-24s %11d %10.2f\n", name, item.getQty(), item.getTotal()));
-                } else {
-                    String[] words = name.split(" ");
-                    StringBuilder firstLineName = new StringBuilder();
-                    StringBuilder secondLineName = new StringBuilder();
+                List<String> lines = new ArrayList<>();
+                StringBuilder currentLine = new StringBuilder();
 
-                    boolean reachedLimit = false;
-
-                    for (String word : words) {
-                        if (!reachedLimit && (firstLineName.length() + word.length() + (firstLineName.length() > 0 ? 1 : 0) <= maxWidth)) {
-                            if (firstLineName.length() > 0) {
-                                firstLineName.append(" ");
-                            }
-                            firstLineName.append(word);
-                        } else {
-                            reachedLimit = true;
-                            if (secondLineName.length() > 0) {
-                                secondLineName.append(" ");
-                            }
-                            secondLineName.append(word);
+                for (String word : name.split(" ")) {
+                    while (word.length() > maxWidth) {
+                        if (currentLine.length() > 0) {
+                            lines.add(currentLine.toString());
+                            currentLine.setLength(0);
                         }
+                        lines.add(word.substring(0, maxWidth));
+                        word = word.substring(maxWidth);
                     }
 
-                    sb.append(String.format("%-24s %11d %10.2f\n", firstLineName.toString(), item.getQty(), item.getTotal()));
-                    String remainingText = secondLineName.toString();
-                    if (remainingText.length() > maxWidth) {
-                        remainingText = remainingText.substring(0, maxWidth);
+                    if (currentLine.length() == 0) {
+                        currentLine.append(word);
+                    } else if (currentLine.length() + 1 + word.length() <= maxWidth) {
+                        currentLine.append(" ").append(word);
+                    } else {
+                        lines.add(currentLine.toString());
+                        currentLine.setLength(0);
+                        currentLine.append(word);
                     }
-                    sb.append(remainingText).append("\n");
+                }
+
+                if (currentLine.length() > 0) {
+                    lines.add(currentLine.toString());
+                }
+
+                // Print first line with qty and amount
+                sb.append(String.format("%-30s %5d %10.2f%n",
+                        lines.get(0),
+                        item.getQty(),
+                        item.getTotal()));
+
+                // Print remaining lines
+                for (int i = 1; i < lines.size(); i++) {
+                    sb.append(String.format("%-30s%n", lines.get(i)));
                 }
             }
 
