@@ -8,6 +8,7 @@ import java.util.List;
 public class BillDTO {
     private String receiptNo;
     private String date;
+    private String time;
     private String cashier;
     private List<BillItemDTO> items;
     private double subTotal;

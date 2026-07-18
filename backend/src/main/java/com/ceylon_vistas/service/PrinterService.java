@@ -42,6 +42,7 @@ public class PrinterService {
             StringBuilder sb = new StringBuilder();
             sb.append(leftRight("Receipt", dto.getReceiptNo())).append("\n");
             sb.append(leftRight("Date", dto.getDate())).append("\n");
+            sb.append(leftRight("Time", dto.getTime())).append("\n");
             sb.append(leftRight("Cashier", dto.getCashier())).append("\n");
 
             sb.append("-----------------------------------------------\n");

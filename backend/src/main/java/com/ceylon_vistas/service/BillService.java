@@ -18,6 +18,7 @@ public class BillService {
         Bill bill = new Bill();
         bill.setReceiptNo(dto.getReceiptNo());
         bill.setDate(dto.getDate());
+        bill.setTime(dto.getTime());
         bill.setCashier(dto.getCashier());
         bill.setSubTotal(dto.getSubTotal());
         bill.setServiceCharge(dto.getServiceCharge());

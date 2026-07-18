@@ -16,6 +16,7 @@ public class Bill {
 
     private String receiptNo;
     private String date;
+    private String time;
     private String cashier;
     private double subTotal;
     private double serviceCharge;

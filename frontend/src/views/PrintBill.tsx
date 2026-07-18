@@ -6,7 +6,6 @@ import type {BillItem} from "../models/BillItem";
 
 export default function PrintBill() {
     const [receiptNo, setReceiptNo] = useState("");
-    const [date, setDate] = useState("");
     const [cashier, setCashier] = useState("");
 
     const [name, setName] = useState("");
@@ -45,9 +44,19 @@ export default function PrintBill() {
 
     const total = subTotal + serviceCharge - discount;
 
+    const now = new Date();
+    const currentDate = now.toISOString().split("T")[0];
+    const currentTime = now.toLocaleTimeString("en-US", {
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: true
+    });
+
     const bill: Bill = {
         receiptNo,
-        date,
+        date: currentDate,
+        time: currentTime,
         cashier,
         items,
         subTotal,
@@ -75,17 +84,11 @@ export default function PrintBill() {
                 </h1>
 
                 {/* BILL DETAILS */}
-                <div className="grid grid-cols-3 gap-4 mb-6">
+                <div className="grid grid-cols-2 gap-4 mb-6">
                     <input
                         placeholder="Receipt No"
                         value={receiptNo}
                         onChange={(e) => setReceiptNo(e.target.value)}
-                        className="border rounded p-2"
-                    />
-                    <input
-                        type="date"
-                        value={date}
-                        onChange={(e) => setDate(e.target.value)}
                         className="border rounded p-2"
                     />
                     <input
@@ -196,7 +199,12 @@ export default function PrintBill() {
                                 </div>
                                 <div className="flex justify-between">
                                     <span>Date</span>
-                                    <span>{date}</span>
+                                    <span>{currentDate}</span>
+                                </div>
+
+                                <div className="flex justify-between">
+                                    <span>Time</span>
+                                    <span>{currentTime}</span>
                                 </div>
                                 <div className="flex justify-between">
                                     <span>Cashier</span>
