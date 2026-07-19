@@ -27,7 +27,6 @@ public class PrinterService {
             sb.append(center("Palatugaha Road, Talpe, Galle")).append("\n");
             sb.append(center("ceylonvistas@gmail.com")).append("\n");
             sb.append(center("077 002 9960")).append("\n\n");
-
             sb.append(leftRight("Receipt: " + dto.getReceiptNo(), "Date: " + dto.getDate())).append("\n");
             sb.append(leftRight("Cashier: " + dto.getCashier(), "Time: " + dto.getTime())).append("\n");
 
@@ -69,13 +68,11 @@ public class PrinterService {
                     lines.add(currentLine.toString());
                 }
 
-                // Print first line with qty and amount
                 sb.append(String.format("%-30s %5d %10.2f%n",
                         lines.get(0),
                         item.getQty(),
                         item.getTotal()));
 
-                // Print remaining lines
                 for (int i = 1; i < lines.size(); i++) {
                     sb.append(String.format("%-30s%n", lines.get(i)));
                 }
@@ -92,6 +89,7 @@ public class PrinterService {
 
             sb.append(center("Thank You. Come Again!")).append("\n\n\n\n");
             System.out.println(sb);
+
         } else {
             try (Socket socket = new Socket(printerConfig.getPrinterIp(), printerConfig.getPrinterPort());
                  OutputStream out = socket.getOutputStream()) {
@@ -162,13 +160,11 @@ public class PrinterService {
                         lines.add(currentLine.toString());
                     }
 
-                    // Print first line with qty and amount
                     sb.append(String.format("%-30s %5d %10.2f%n",
                             lines.get(0),
                             item.getQty(),
                             item.getTotal()));
 
-                    // Print remaining lines
                     for (int i = 1; i < lines.size(); i++) {
                         sb.append(String.format("%-30s%n", lines.get(i)));
                     }
