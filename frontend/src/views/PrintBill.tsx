@@ -1,4 +1,7 @@
-import {useState} from "react";
+import {useRef, useState} from "react";
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
+import {HiOutlineTrash} from "react-icons/hi";
 import {successNotification, errorNotification} from "../util/alert";
 import {printBill} from "../controllers/PrintBillController";
 import type {Bill} from "../models/Bill";
@@ -17,6 +20,7 @@ export default function PrintBill() {
     const [discount, setDiscount] = useState(0);
 
     const [showPreview, setShowPreview] = useState(false);
+    const previewRef = useRef<HTMLDivElement>(null);
 
     const addItem = () => {
         if (!name || qty <= 0 || unitPrice <= 0) {
@@ -75,6 +79,29 @@ export default function PrintBill() {
         }
     };
 
+    const deleteItem = (index: number) => {
+        setItems(items.filter((_, i) => i !== index));
+    };
+
+    const downloadBill = async () => {
+        if (!previewRef.current) return;
+
+        const canvas = await html2canvas(previewRef.current);
+        const imgData = canvas.toDataURL("image/png");
+
+        const pdf = new jsPDF({
+            orientation: "portrait",
+            unit: "mm",
+            format: [80, 200]
+        });
+
+        const imgWidth = 80;
+        const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+        pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
+        pdf.save(`${receiptNo}.pdf`);
+    };
+
     return (
         <div className="min-h-screen bg-gray-100 p-10">
 
@@ -131,6 +158,7 @@ export default function PrintBill() {
                         <th className="border p-2">Qty</th>
                         <th className="border p-2">Unit Price</th>
                         <th className="border p-2">Total</th>
+                        <th className="border p-2">Action</th>
                     </tr>
                     </thead>
 
@@ -142,53 +170,75 @@ export default function PrintBill() {
                                 <td className="border p-2 text-center">{item.qty}</td>
                                 <td className="border p-2 text-right">{item.unitPrice.toFixed(2)}</td>
                                 <td className="border p-2 text-right">{item.total.toFixed(2)}</td>
+                                <td className="border p-2 text-center">
+                                    <button title="Delete" onClick={() => deleteItem(index)}
+                                            className="text-red-500 hover:text-red-700 transition-colors duration-200">
+                                        <HiOutlineTrash size={20}/>
+                                    </button>
+                                </td>
                             </tr>
                         ))
                     }
                     </tbody>
                 </table>
 
-                <div className="grid grid-cols-2 gap-4">
-                    <div>
-                        <div className="flex justify-between">
-                            <span>Sub Total</span>
-                            <span>{subTotal.toFixed(2)}</span>
-                        </div>
-                        <div className="flex justify-between mt-2">
-                            <span>Service Charge</span>
-                            <input
-                                type="number"
-                                value={serviceCharge}
-                                onChange={(e) => setServiceCharge(Number(e.target.value))}
-                                className="border w-32 text-right"
-                            />
-                        </div>
-                        <div className="flex justify-between mt-2">
-                            <span>Discount</span>
-                            <input
-                                type="number"
-                                value={discount}
-                                onChange={(e) => setDiscount(Number(e.target.value))}
-                                className="border w-32 text-right"
-                            />
-                        </div>
-                        <div className="flex justify-between font-bold text-lg mt-3">
-                            <span>Total</span>
-                            <span>{total.toFixed(2)}</span>
-                        </div>
-                    </div>
+                <div className="flex justify-center mb-4">
+                    <table className="w-full border">
+                        <tbody>
+                        <tr>
+                            <td className="border p-2">Sub Total</td>
+                            <td className="border p-2 text-right">
+                                {subTotal.toFixed(2)}
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td className="border p-2">Service Charge</td>
+                            <td className="border p-2 text-right">
+                                <input
+                                    type="number"
+                                    value={serviceCharge}
+                                    onChange={(e) => setServiceCharge(Number(e.target.value))}
+                                    className="w-full text-right"
+                                />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td className="border p-2">Discount</td>
+                            <td className="border p-2 text-right">
+                                <input
+                                    type="number"
+                                    value={discount}
+                                    onChange={(e) => setDiscount(Number(e.target.value))}
+                                    className="w-full text-right"
+                                />
+                            </td>
+                        </tr>
+
+                        <tr className="font-bold text">
+                            <td className="border p-2">Total</td>
+                            <td className="border p-2 text-right">
+                                {total.toFixed(2)}
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
-                <button onClick={() => setShowPreview(true)}
-                        className="mt-6 w-full bg-blue-600 text-white py-3 rounded">
-                    Preview Bill
-                </button>
+
+                <div className="flex justify-center mt-6">
+                    <button onClick={() => setShowPreview(true)}
+                            className="bg-blue-600 text-white px-8 py-3 rounded hover:bg-blue-700 transition-colors">
+                        Preview Bill
+                    </button>
+                </div>
             </div>
 
             {/* PREVIEW MODAL */}
             {
                 showPreview && (
                     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-                        <div className="bg-white w-[380px] p-6 shadow-lg font-mono">
+                        <div ref={previewRef} className="bg-white w-[380px] p-6 shadow-lg font-mono">
                             <h2 className="text-center text-xl font-bold mb-2">AERIS ISLAND</h2>
                             <h6 className="text-center">Palatugaha Road, Talpe, Galle</h6>
                             <h6 className="text-center">ceylonvistas@gmail.com</h6>
@@ -253,13 +303,20 @@ export default function PrintBill() {
                             <div className="flex gap-3 mt-5">
                                 <button
                                     onClick={() => setShowPreview(false)}
-                                    className="w-1/2 bg-gray-400 text-white py-2 rounded">
+                                    className="w-1/3 bg-gray-400 text-white py-2 rounded">
                                     Cancel
                                 </button>
+
+                                <button
+                                    onClick={downloadBill}
+                                    className="w-1/3 bg-blue-600 text-white py-2 rounded">
+                                    Download
+                                </button>
+
                                 <button
                                     onClick={confirmPrint}
-                                    className="w-1/2 bg-green-600 text-white py-2 rounded">
-                                    Confirm Print
+                                    className="w-1/3 bg-green-600 text-white py-2 rounded">
+                                    Print
                                 </button>
                             </div>
                         </div>
