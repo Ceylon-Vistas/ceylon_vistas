@@ -51,7 +51,7 @@ export default function PrintBill() {
         minute: "2-digit",
         second: "2-digit",
         hour12: true
-    });
+    }).replace(/\s+(AM|PM)$/, "$1");
 
     const bill: Bill = {
         receiptNo,
@@ -189,35 +189,28 @@ export default function PrintBill() {
                 showPreview && (
                     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
                         <div className="bg-white w-[380px] p-6 shadow-lg font-mono">
-                            <h2 className="text-center text-xl font-bold">
-                                NOA SANDS
-                            </h2>
+                            <h2 className="text-center text-xl font-bold mb-2">AERIS ISLAND</h2>
+                            <h6 className="text-center">Palatugaha Road, Talpe, Galle</h6>
+                            <h6 className="text-center">ceylonvistas@gmail.com</h6>
+                            <h6 className="text-center">077 002 9960</h6>
+
                             <div className="mt-4">
                                 <div className="flex justify-between">
-                                    <span>Receipt</span>
-                                    <span>{receiptNo}</span>
+                                    <span>Receipt: {receiptNo}</span>
+                                    <span>Date: {currentDate}</span>
                                 </div>
                                 <div className="flex justify-between">
-                                    <span>Date</span>
-                                    <span>{currentDate}</span>
-                                </div>
-
-                                <div className="flex justify-between">
-                                    <span>Time</span>
-                                    <span>{currentTime}</span>
-                                </div>
-                                <div className="flex justify-between">
-                                    <span>Cashier</span>
-                                    <span>{cashier}</span>
+                                    <span>Cashier: {cashier}</span>
+                                    <span>Time: {currentTime}</span>
                                 </div>
                             </div>
 
                             <hr className="my-3"/>
 
-                            <div className="flex justify-between font-bold">
-                                <span>Item</span>
-                                <span>Qty</span>
-                                <span>Amount</span>
+                            <div className="flex font-bold">
+                                <span className="w-40">Item</span>
+                                <span className="w-10 text-center">Qty</span>
+                                <span className="flex-1 text-right">Amount</span>
                             </div>
 
                             <hr className="my-3"/>
@@ -225,10 +218,10 @@ export default function PrintBill() {
                             {
                                 items.map((item, index) => (
                                     <div key={index} className="mb-2">
-                                        <div className="flex justify-between">
+                                        <div className="flex">
                                             <span className="w-40">{item.name}</span>
-                                            <span>{item.qty}</span>
-                                            <span>{item.total.toFixed(2)}</span>
+                                            <span className="w-10 text-center">{item.qty}</span>
+                                            <span className="flex-1 text-right">{item.total.toFixed(2)}</span>
                                         </div>
                                     </div>
                                 ))
@@ -248,14 +241,14 @@ export default function PrintBill() {
                                 <span>Discount</span>
                                 <span>{discount.toFixed(2)}</span>
                             </div>
-                            <div className="flex justify-between font-bold text-lg mt-2">
+                            <div className="flex justify-between">
                                 <span>Total</span>
                                 <span>{total.toFixed(2)}</span>
                             </div>
 
                             <hr className="my-3"/>
 
-                            <p className="text-center">Thank You!</p>
+                            <p className="text-center">Thank You. Come Again!</p>
 
                             <div className="flex gap-3 mt-5">
                                 <button

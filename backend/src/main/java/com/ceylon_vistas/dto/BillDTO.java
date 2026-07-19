@@ -7,9 +7,9 @@ import java.util.List;
 @Data
 public class BillDTO {
     private String receiptNo;
+    private String cashier;
     private String date;
     private String time;
-    private String cashier;
     private List<BillItemDTO> items;
     private double subTotal;
     private double serviceCharge;

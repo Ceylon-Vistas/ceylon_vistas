@@ -47,10 +47,8 @@ public class PrinterService {
             out.write(new byte[]{0x1B, 0x61, 0x00});
 
             StringBuilder sb = new StringBuilder();
-            sb.append(leftRight("Receipt", dto.getReceiptNo())).append("\n");
-            sb.append(leftRight("Date", dto.getDate())).append("\n");
-            sb.append(leftRight("Time", dto.getTime())).append("\n");
-            sb.append(leftRight("Cashier", dto.getCashier())).append("\n");
+            sb.append(leftRight("Receipt: " + dto.getReceiptNo(), "Date: " + dto.getDate())).append("\n");
+            sb.append(leftRight("Cashier: " + dto.getCashier(), "Time: " + dto.getTime())).append("\n");
 
             sb.append("-----------------------------------------------\n");
 
