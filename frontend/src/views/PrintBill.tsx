@@ -207,7 +207,7 @@ export default function PrintBill() {
 
                             <hr className="my-3"/>
 
-                            <div className="flex font-bold">
+                            <div className="flex">
                                 <span className="w-40">Item</span>
                                 <span className="w-10 text-center">Qty</span>
                                 <span className="flex-1 text-right">Amount</span>
