@@ -18,35 +18,16 @@ public class PrinterService {
     @Autowired
     private PrinterConfig printerConfig;
 
+    private boolean debug = true;
+
     public void printBill(BillDTO dto) {
-        try (Socket socket = new Socket(printerConfig.getPrinterIp(), printerConfig.getPrinterPort());
-             OutputStream out = socket.getOutputStream()) {
-
-            // Initialize printer
-            out.write(new byte[]{0x1B, 0x40});
-
-            // Center alignment
-            out.write(new byte[]{0x1B, 0x61, 0x01});
-
-            // Double size + Bold
-            out.write(new byte[]{0x1D, 0x21, 0x11});
-            out.write("AERIS ISLAND\n\n".getBytes(StandardCharsets.UTF_8));
-
-            // Normal text
-            out.write(new byte[]{0x1D, 0x21, 0x00});
-            out.write(new byte[]{0x1B, 0x45, 0x00});
-            out.write("Palatugaha Road, Talpe, Galle\n".getBytes(StandardCharsets.UTF_8));
-            out.write("ceylonvistas@gmail.com\n".getBytes(StandardCharsets.UTF_8));
-            out.write("077 002 9960\n\n".getBytes(StandardCharsets.UTF_8));
-
-            // Normal text
-            out.write(new byte[]{0x1D, 0x21, 0x00});
-            out.write(new byte[]{0x1B, 0x45, 0x00});
-
-            // Left alignment
-            out.write(new byte[]{0x1B, 0x61, 0x00});
-
+        if (debug) {
             StringBuilder sb = new StringBuilder();
+            sb.append(center("AERIS ISLAND")).append("\n");
+            sb.append(center("Palatugaha Road, Talpe, Galle")).append("\n");
+            sb.append(center("ceylonvistas@gmail.com")).append("\n");
+            sb.append(center("077 002 9960")).append("\n\n");
+
             sb.append(leftRight("Receipt: " + dto.getReceiptNo(), "Date: " + dto.getDate())).append("\n");
             sb.append(leftRight("Cashier: " + dto.getCashier(), "Time: " + dto.getTime())).append("\n");
 
@@ -110,18 +91,112 @@ public class PrinterService {
             sb.append("-----------------------------------------------\n");
 
             sb.append(center("Thank You. Come Again!")).append("\n\n\n\n");
+            System.out.println(sb);
+        } else {
+            try (Socket socket = new Socket(printerConfig.getPrinterIp(), printerConfig.getPrinterPort());
+                 OutputStream out = socket.getOutputStream()) {
 
-            out.write(sb.toString().getBytes(StandardCharsets.UTF_8));
+                // Initialize printer
+                out.write(new byte[]{0x1B, 0x40});
 
-            // Feed paper
-            out.write(new byte[]{0x0A, 0x0A, 0x0A});
+                // Center alignment
+                out.write(new byte[]{0x1B, 0x61, 0x01});
 
-            // Full cut
-            out.write(new byte[]{0x1D, 0x56, 0x00});
+                // Double size + Bold
+                out.write(new byte[]{0x1D, 0x21, 0x11});
+                out.write("AERIS ISLAND\n\n".getBytes(StandardCharsets.UTF_8));
 
-            out.flush();
-        } catch (Exception e) {
-            e.printStackTrace();
+                // Normal text
+                out.write(new byte[]{0x1D, 0x21, 0x00});
+                out.write(new byte[]{0x1B, 0x45, 0x00});
+                out.write("Palatugaha Road, Talpe, Galle\n".getBytes(StandardCharsets.UTF_8));
+                out.write("ceylonvistas@gmail.com\n".getBytes(StandardCharsets.UTF_8));
+                out.write("077 002 9960\n\n".getBytes(StandardCharsets.UTF_8));
+
+                // Normal text
+                out.write(new byte[]{0x1D, 0x21, 0x00});
+                out.write(new byte[]{0x1B, 0x45, 0x00});
+
+                // Left alignment
+                out.write(new byte[]{0x1B, 0x61, 0x00});
+
+                StringBuilder sb = new StringBuilder();
+                sb.append(leftRight("Receipt: " + dto.getReceiptNo(), "Date: " + dto.getDate())).append("\n");
+                sb.append(leftRight("Cashier: " + dto.getCashier(), "Time: " + dto.getTime())).append("\n");
+
+                sb.append("-----------------------------------------------\n");
+
+                sb.append(String.format("%-24s %11s %10s\n", "Item", "Qty", "Amount"));
+
+                sb.append("-----------------------------------------------\n");
+
+                for (BillItemDTO item : dto.getItems()) {
+                    String name = item.getName();
+                    int maxWidth = 30;
+
+                    List<String> lines = new ArrayList<>();
+                    StringBuilder currentLine = new StringBuilder();
+
+                    for (String word : name.split(" ")) {
+                        while (word.length() > maxWidth) {
+                            if (currentLine.length() > 0) {
+                                lines.add(currentLine.toString());
+                                currentLine.setLength(0);
+                            }
+                            lines.add(word.substring(0, maxWidth));
+                            word = word.substring(maxWidth);
+                        }
+
+                        if (currentLine.length() == 0) {
+                            currentLine.append(word);
+                        } else if (currentLine.length() + 1 + word.length() <= maxWidth) {
+                            currentLine.append(" ").append(word);
+                        } else {
+                            lines.add(currentLine.toString());
+                            currentLine.setLength(0);
+                            currentLine.append(word);
+                        }
+                    }
+
+                    if (currentLine.length() > 0) {
+                        lines.add(currentLine.toString());
+                    }
+
+                    // Print first line with qty and amount
+                    sb.append(String.format("%-30s %5d %10.2f%n",
+                            lines.get(0),
+                            item.getQty(),
+                            item.getTotal()));
+
+                    // Print remaining lines
+                    for (int i = 1; i < lines.size(); i++) {
+                        sb.append(String.format("%-30s%n", lines.get(i)));
+                    }
+                }
+
+                sb.append("-----------------------------------------------\n");
+
+                sb.append(leftRight("Bill Amount", format(dto.getSubTotal()))).append("\n");
+                sb.append(leftRight("Service Charge", format(dto.getServiceCharge()))).append("\n");
+                sb.append(leftRight("Discount", format(dto.getDiscount()))).append("\n");
+                sb.append(leftRight("Total", format(dto.getTotal()))).append("\n");
+
+                sb.append("-----------------------------------------------\n");
+
+                sb.append(center("Thank You. Come Again!")).append("\n\n\n\n");
+
+                out.write(sb.toString().getBytes(StandardCharsets.UTF_8));
+
+                // Feed paper
+                out.write(new byte[]{0x0A, 0x0A, 0x0A});
+
+                // Full cut
+                out.write(new byte[]{0x1D, 0x56, 0x00});
+
+                out.flush();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
