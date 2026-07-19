@@ -30,7 +30,14 @@ public class PrinterService {
 
             // Double size + Bold
             out.write(new byte[]{0x1D, 0x21, 0x11});
-            out.write("NOA SANDS\n\n".getBytes(StandardCharsets.UTF_8));
+            out.write("AERIS ISLAND\n\n".getBytes(StandardCharsets.UTF_8));
+
+            // Normal text
+            out.write(new byte[]{0x1D, 0x21, 0x00});
+            out.write(new byte[]{0x1B, 0x45, 0x00});
+            out.write("Palatugaha Road, Talpe, Galle\n".getBytes(StandardCharsets.UTF_8));
+            out.write("ceylonvistas@gmail.com\n".getBytes(StandardCharsets.UTF_8));
+            out.write("077 002 9960\n\n".getBytes(StandardCharsets.UTF_8));
 
             // Normal text
             out.write(new byte[]{0x1D, 0x21, 0x00});
@@ -104,7 +111,7 @@ public class PrinterService {
 
             sb.append("-----------------------------------------------\n");
 
-            sb.append(center("Thank You!")).append("\n\n\n\n");
+            sb.append(center("Thank You. Come Again!")).append("\n\n\n\n");
 
             out.write(sb.toString().getBytes(StandardCharsets.UTF_8));
 
