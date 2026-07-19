@@ -86,19 +86,36 @@ export default function PrintBill() {
     const downloadBill = async () => {
         if (!previewRef.current) return;
 
-        const canvas = await html2canvas(previewRef.current);
+        const canvas = await html2canvas(previewRef.current, {
+            scale: 2,
+            scrollY: -window.scrollY,
+            useCORS: true
+        });
+
         const imgData = canvas.toDataURL("image/png");
+
+        const pdfWidth = 105;
+        const imgWidth = 90;
+
+        const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
         const pdf = new jsPDF({
             orientation: "portrait",
             unit: "mm",
-            format: [80, 200]
+            format: [pdfWidth, imgHeight + 20]
         });
 
-        const imgWidth = 80;
-        const imgHeight = (canvas.height * imgWidth) / canvas.width;
+        const x = (pdfWidth - imgWidth) / 2;
 
-        pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
+        pdf.addImage(
+            imgData,
+            "PNG",
+            x,
+            10,
+            imgWidth,
+            imgHeight
+        );
+
         pdf.save(`${receiptNo}.pdf`);
     };
 
@@ -229,7 +246,7 @@ export default function PrintBill() {
                 <div className="flex justify-center mt-6">
                     <button onClick={() => setShowPreview(true)}
                             className="bg-blue-600 text-white px-8 py-3 rounded hover:bg-blue-700 transition-colors">
-                        Preview Bill
+                        Preview
                     </button>
                 </div>
             </div>
@@ -238,67 +255,71 @@ export default function PrintBill() {
             {
                 showPreview && (
                     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-                        <div ref={previewRef} className="bg-white w-[380px] p-6 shadow-lg font-mono">
-                            <h2 className="text-center text-xl font-bold mb-2">AERIS ISLAND</h2>
-                            <h6 className="text-center">Palatugaha Road, Talpe, Galle</h6>
-                            <h6 className="text-center">ceylonvistas@gmail.com</h6>
-                            <h6 className="text-center">077 002 9960</h6>
+                        <div className="bg-white w-[380px] p-6 shadow-lg font-mono">
 
-                            <div className="mt-4">
-                                <div className="flex justify-between">
-                                    <span>Receipt: {receiptNo}</span>
-                                    <span>Date: {currentDate}</span>
-                                </div>
-                                <div className="flex justify-between">
-                                    <span>Cashier: {cashier}</span>
-                                    <span>Time: {currentTime}</span>
-                                </div>
-                            </div>
+                            <div ref={previewRef} className="font-mono">
+                                <h2 className="text-center text-xl font-bold mb-2">AERIS ISLAND</h2>
+                                <h6 className="text-center">Palatugaha Road, Talpe, Galle</h6>
+                                <h6 className="text-center">ceylonvistas@gmail.com</h6>
+                                <h6 className="text-center">077 002 9960</h6>
 
-                            <hr className="my-3"/>
-
-                            <div className="flex">
-                                <span className="w-40">Item</span>
-                                <span className="w-10 text-center">Qty</span>
-                                <span className="flex-1 text-right">Amount</span>
-                            </div>
-
-                            <hr className="my-3"/>
-
-                            {
-                                items.map((item, index) => (
-                                    <div key={index} className="mb-2">
-                                        <div className="flex">
-                                            <span className="w-40">{item.name}</span>
-                                            <span className="w-10 text-center">{item.qty}</span>
-                                            <span className="flex-1 text-right">{item.total.toFixed(2)}</span>
-                                        </div>
+                                <div className="mt-4">
+                                    <div className="flex justify-between">
+                                        <span>Receipt: {receiptNo}</span>
+                                        <span>Date: {currentDate}</span>
                                     </div>
-                                ))
-                            }
+                                    <div className="flex justify-between">
+                                        <span>Cashier: {cashier}</span>
+                                        <span>Time: {currentTime}</span>
+                                    </div>
+                                </div>
 
-                            <hr className="my-3"/>
+                                <hr className="my-3"/>
 
-                            <div className="flex justify-between">
-                                <span>Bill Amount</span>
-                                <span>{subTotal.toFixed(2)}</span>
-                            </div>
-                            <div className="flex justify-between">
-                                <span>Service Charge</span>
-                                <span>{serviceCharge.toFixed(2)}</span>
-                            </div>
-                            <div className="flex justify-between">
-                                <span>Discount</span>
-                                <span>{discount.toFixed(2)}</span>
-                            </div>
-                            <div className="flex justify-between">
-                                <span>Total</span>
-                                <span>{total.toFixed(2)}</span>
-                            </div>
+                                <div className="flex">
+                                    <span className="w-40">Item</span>
+                                    <span className="w-10 text-center">Qty</span>
+                                    <span className="flex-1 text-right">Amount</span>
+                                </div>
 
-                            <hr className="my-3"/>
+                                <hr className="my-3"/>
 
-                            <p className="text-center">Thank You. Come Again!</p>
+                                {items.map((item, index) => (
+                                    <div key={index} className="flex">
+                                        <span className="w-40">{item.name}</span>
+                                        <span className="w-10 text-center">{item.qty}</span>
+                                        <span className="flex-1 text-right">{item.total.toFixed(2)}</span>
+                                    </div>
+                                ))}
+
+                                <hr className="my-3"/>
+
+                                <div className="flex justify-between">
+                                    <span>Bill Amount</span>
+                                    <span>{subTotal.toFixed(2)}</span>
+                                </div>
+
+                                <div className="flex justify-between">
+                                    <span>Service Charge</span>
+                                    <span>{serviceCharge.toFixed(2)}</span>
+                                </div>
+
+                                <div className="flex justify-between">
+                                    <span>Discount</span>
+                                    <span>{discount.toFixed(2)}</span>
+                                </div>
+
+                                <div className="flex justify-between font-bold">
+                                    <span>Total</span>
+                                    <span>{total.toFixed(2)}</span>
+                                </div>
+
+                                <hr className="my-3"/>
+
+                                <p className="text-center pb-1">
+                                    Thank You. Come Again!
+                                </p>
+                            </div>
 
                             <div className="flex gap-3 mt-5">
                                 <button
@@ -306,13 +327,11 @@ export default function PrintBill() {
                                     className="w-1/3 bg-gray-400 text-white py-2 rounded">
                                     Cancel
                                 </button>
-
                                 <button
                                     onClick={downloadBill}
                                     className="w-1/3 bg-blue-600 text-white py-2 rounded">
                                     Download
                                 </button>
-
                                 <button
                                     onClick={confirmPrint}
                                     className="w-1/3 bg-green-600 text-white py-2 rounded">
