@@ -42,43 +42,61 @@ export default function PrintBill() {
 
                 {/* BILL DETAILS */}
                 <div className="grid grid-cols-2 gap-4 mb-6">
-                    <input
-                        placeholder="Bill No"
-                        value={billNo}
-                        onChange={(e) => setBillNo(e.target.value)}
-                        className="border rounded p-2 outline-none focus:ring-2 focus:ring-sky-300 focus:border-sky-400"
-                    />
-                    <input
-                        placeholder="Cashier"
-                        value={cashier}
-                        onChange={(e) => setCashier(e.target.value)}
-                        className="border rounded p-2 outline-none focus:ring-2 focus:ring-sky-300 focus:border-sky-400"
-                    />
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Bill No</label>
+                        <input
+                            value={billNo}
+                            onChange={(e) => setBillNo(e.target.value)}
+                            className="w-full border rounded p-2 outline-none focus:ring-2 focus:ring-sky-300 focus:border-sky-400"
+                        />
+                    </div>
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Cashier</label>
+                        <input
+                            value={cashier}
+                            onChange={(e) => setCashier(e.target.value)}
+                            className="w-full border rounded p-2 outline-none focus:ring-2 focus:ring-sky-300 focus:border-sky-400"
+                        />
+                    </div>
                 </div>
 
                 {/* ITEM ADD */}
                 <div className="grid grid-cols-4 gap-4 mb-4">
-                    <input
-                        placeholder="Item"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        className="border rounded p-2 outline-none focus:ring-2 focus:ring-sky-300 focus:border-sky-400"
-                    />
-                    <input
-                        type="number"
-                        value={qty}
-                        onChange={(e) => setQty(Number(e.target.value))}
-                        className="border rounded p-2 outline-none focus:ring-2 focus:ring-sky-300 focus:border-sky-400"
-                    />
-                    <input
-                        type="number"
-                        value={unitPrice}
-                        onChange={(e) => setUnitPrice(Number(e.target.value))}
-                        className="border rounded p-2 outline-none focus:ring-2 focus:ring-sky-300 focus:border-sky-400"
-                    />
-                    <button onClick={addItem} className="bg-green-600 text-white rounded">
-                        + Add
-                    </button>
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Item</label>
+                        <input
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            className="border rounded p-2 outline-none focus:ring-2 focus:ring-sky-300 focus:border-sky-400"
+                        />
+                    </div>
+
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Qty</label>
+                        <input
+                            type="number"
+                            value={qty}
+                            onChange={(e) => setQty(Number(e.target.value))}
+                            className="border rounded p-2 outline-none focus:ring-2 focus:ring-sky-300 focus:border-sky-400"
+                        />
+                    </div>
+
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Unit Price</label>
+                        <input
+                            type="number"
+                            value={unitPrice}
+                            onChange={(e) => setUnitPrice(Number(e.target.value))}
+                            className="border rounded p-2 outline-none focus:ring-2 focus:ring-sky-300 focus:border-sky-400"
+                        />
+                    </div>
+
+                    <div className="flex items-end">
+                        <button onClick={addItem}
+                                className="w-full p-2 bg-green-600 text-white rounded hover:bg-green-700 transition">
+                            + Add
+                        </button>
+                    </div>
                 </div>
 
                 <table className="w-full border mb-6">
