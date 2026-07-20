@@ -1,9 +1,8 @@
 # ⭐ Ceylon Vistas POS ⭐
 
-Welcome to the **Ceylon Vistas POS & Inventory Management System** — a modern and efficient restaurant management
-solution designed to simplify daily operations. The system provides a seamless experience for billing, inventory
-management, purchasing, stock control, and kitchen operations through an intuitive React frontend and a powerful Spring
-Boot REST API.
+Welcome to the **Ceylon Vistas POS** — a modern and efficient restaurant management solution designed to simplify daily
+operations. The system provides a seamless experience for billing, inventory management, purchasing, stock control, and
+kitchen operations through an intuitive React frontend and a powerful Spring Boot REST API.
 
 ## 🛠️ Tech Stack
 
@@ -36,24 +35,10 @@ Boot REST API.
 ### 🛒 Point of Sale (POS)
 
 ✅ Generate customer bills  
-✅ Add multiple bill items  
-✅ Automatic subtotal calculation  
-✅ Service charge calculation  
-✅ Discount calculation  
-✅ Automatic total calculation  
+✅ Add multiple bill items ✅ Automatic total calculation  
 ✅ Bill preview before printing  
 ✅ Download bill as PDF  
 ✅ Print bills directly to ESC/POS thermal printers
-
-### 🖨️ Billing
-
-✅ Receipt preview  
-✅ PDF receipt generation  
-✅ Thermal printer support  
-✅ Receipt number generation  
-✅ Date & time printing  
-✅ Cashier details  
-✅ Service charge & discount support
 
 ### 👨‍🍳 Menu Management
 
@@ -66,7 +51,6 @@ Boot REST API.
 
 ✅ Manage inventory items  
 ✅ Stock quantity management  
-✅ Unit management  
 ✅ Inventory cost tracking  
 ✅ Stock availability monitoring
 
@@ -87,7 +71,7 @@ Boot REST API.
 ### 👥 Customer Management
 
 ✅ Add customers  
-✅ Update customer details  
+✅ Update customer  
 ✅ Delete customers  
 ✅ Search customers
 
@@ -104,15 +88,15 @@ Boot REST API.
 
 ### 📦 Inventory
 
-✅ CRUD APIs for Inventory Items
+✅ CRUD APIs
 
 ### 🚚 Purchase Orders
 
-✅ CRUD APIs for Purchase Orders
+✅ CRUD APIs
 
 ### 📋 Goods Received Notes
 
-✅ CRUD APIs for GRN
+✅ CRUD APIs
 
 ### 👥 Customer
 
@@ -129,10 +113,7 @@ Boot REST API.
 ✅ Inventory Management  
 ✅ Purchase Orders  
 ✅ Goods Received Notes (GRN)  
-✅ Menu Management  
-✅ Bill Printing  
-✅ Receipt Preview  
-✅ PDF Download
+✅ Menu Management
 
 ## ▶️ How to Run the Project
 
