@@ -14,7 +14,7 @@ public class BillService {
     @Autowired
     private BillRepository billRepository;
 
-    public Bill saveBill(BillDTO dto) {
+    public Bill save(BillDTO dto) {
         Bill bill = new Bill();
         bill.setReceiptNo(dto.getReceiptNo());
         bill.setDate(dto.getDate());
@@ -27,11 +27,11 @@ public class BillService {
         return billRepository.save(bill);
     }
 
-    public List<Bill> getAllBills() {
+    public List<Bill> getAll() {
         return billRepository.findAll();
     }
 
-    public Bill getBillById(Long id) {
+    public Bill getById(Long id) {
         return billRepository.findById(id).orElseThrow(() -> new RuntimeException("Bill not found"));
     }
 }

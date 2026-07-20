@@ -15,17 +15,17 @@ public class BillController {
     private BillService billService;
 
     @PostMapping
-    public ResponseEntity<?> saveBill(@RequestBody BillDTO dto) {
-        return ResponseEntity.ok(billService.saveBill(dto));
+    public ResponseEntity<?> save(@RequestBody BillDTO dto) {
+        return ResponseEntity.ok(billService.save(dto));
     }
 
     @GetMapping
-    public ResponseEntity<?> getAllBills() {
-        return ResponseEntity.ok(billService.getAllBills());
+    public ResponseEntity<?> getAll() {
+        return ResponseEntity.ok(billService.getAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getBillById(@PathVariable Long id) {
-        return ResponseEntity.ok(billService.getBillById(id));
+    public ResponseEntity<?> getById(@PathVariable Long id) {
+        return ResponseEntity.ok(billService.getById(id));
     }
 }
