@@ -2,10 +2,9 @@ import {useNavigate} from "react-router-dom";
 import {
     HiOutlineCash,
     HiOutlineCube,
-    HiOutlineChartBar,
     HiOutlineShoppingCart,
     HiOutlineUsers,
-    HiOutlineClipboardList
+    HiOutlineClipboardList, HiOutlineHome
 } from "react-icons/hi";
 
 export default function Home() {
@@ -110,24 +109,23 @@ export default function Home() {
                     </button>
                 </div>
 
-                {/* REPORTS */}
+                {/* PMS */}
                 <div className="bg-white rounded-xl border shadow-sm p-6 hover:shadow-lg transition">
                     <div className="flex items-center gap-4 mb-4">
-                        <div className="bg-green-100 p-3 rounded-lg">
-                            <HiOutlineChartBar size={30} className="text-green-600"/>
+                        <div className="bg-blue-100 p-3 rounded-lg">
+                            <HiOutlineHome size={30} className="text-blue-600"/>
                         </div>
-                        <h2 className="text-xl font-semibold text-gray-800">Reports</h2>
+                        <h2 className="text-xl font-semibold text-gray-800">Property Management</h2>
                     </div>
                     <p className="text-sm text-gray-500 mb-6">
-                        Analyze sales and transaction reports.
+                        Manage reservations, rooms, guests, check-ins and hotel operations.
                     </p>
-                    <button
-                        className="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-lg font-medium transition">
-                        View Reports
+                    <button onClick={() => navigate("/pms")}
+                            className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-medium transition">
+                        Open PMS
                     </button>
                 </div>
             </div>
-
 
             {/* RECENT TRANSACTIONS */}
             <div className="bg-white rounded-xl border shadow-sm p-6">
