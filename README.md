@@ -1,4 +1,4 @@
-# ⭐ Ceylon Vistas POS & Inventory Management System ⭐
+# ⭐ Ceylon Vistas POS ⭐
 
 Welcome to the **Ceylon Vistas POS & Inventory Management System** — a modern and efficient restaurant management
 solution designed to simplify daily operations. The system provides a seamless experience for billing, inventory
