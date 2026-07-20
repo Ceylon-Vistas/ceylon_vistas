@@ -2,7 +2,6 @@ import {HiOutlineTrash} from "react-icons/hi";
 import usePrintBillController from "../controllers/PrintBillController";
 
 export default function PrintBill() {
-
     const {
         receiptNo,
         cashier,
@@ -39,7 +38,7 @@ export default function PrintBill() {
         <div className="min-h-screen bg-gray-100 p-10">
 
             <div className="max-w-4xl mx-auto bg-white shadow rounded-lg p-6">
-                <h1 className="text-3xl font-bold text-center mb-6">Print Bill</h1>
+                <h1 className="text-3xl font-bold text-center mb-6">Bill</h1>
 
                 {/* BILL DETAILS */}
                 <div className="grid grid-cols-2 gap-4 mb-6">
@@ -47,13 +46,13 @@ export default function PrintBill() {
                         placeholder="Receipt No"
                         value={receiptNo}
                         onChange={(e) => setReceiptNo(e.target.value)}
-                        className="border rounded p-2"
+                        className="border rounded p-2 outline-none focus:ring-2 focus:ring-sky-300 focus:border-sky-400"
                     />
                     <input
                         placeholder="Cashier"
                         value={cashier}
                         onChange={(e) => setCashier(e.target.value)}
-                        className="border rounded p-2"
+                        className="border rounded p-2 outline-none focus:ring-2 focus:ring-sky-300 focus:border-sky-400"
                     />
                 </div>
 
@@ -63,19 +62,19 @@ export default function PrintBill() {
                         placeholder="Name"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
-                        className="border rounded p-2"
+                        className="border rounded p-2 outline-none focus:ring-2 focus:ring-sky-300 focus:border-sky-400"
                     />
                     <input
                         type="number"
                         value={qty}
                         onChange={(e) => setQty(Number(e.target.value))}
-                        className="border rounded p-2"
+                        className="border rounded p-2 outline-none focus:ring-2 focus:ring-sky-300 focus:border-sky-400"
                     />
                     <input
                         type="number"
                         value={unitPrice}
                         onChange={(e) => setUnitPrice(Number(e.target.value))}
-                        className="border rounded p-2"
+                        className="border rounded p-2 outline-none focus:ring-2 focus:ring-sky-300 focus:border-sky-400"
                     />
                     <button onClick={addItem} className="bg-green-600 text-white rounded">
                         Add Item
@@ -126,7 +125,7 @@ export default function PrintBill() {
                                     type="number"
                                     value={serviceCharge}
                                     onChange={(e) => setServiceCharge(Number(e.target.value))}
-                                    className="w-full text-right"
+                                    className="w-full text-right rounded outline-none focus:ring-2 focus:ring-sky-300 focus:border-sky-400"
                                 />
                             </td>
                         </tr>
@@ -137,7 +136,7 @@ export default function PrintBill() {
                                     type="number"
                                     value={discount}
                                     onChange={(e) => setDiscount(Number(e.target.value))}
-                                    className="w-full text-right"
+                                    className="w-full text-right rounded outline-none focus:ring-2 focus:ring-sky-300 focus:border-sky-400"
                                 />
                             </td>
                         </tr>
