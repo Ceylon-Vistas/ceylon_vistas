@@ -35,22 +35,19 @@ export default function PrintBill() {
     } = usePrintBillController();
 
     return (
-        <div className="min-h-screen bg-gray-100 p-14">
+        <div className="min-h-screen bg-gray-100 p-6">
 
-            <div className="max-w-4xl mx-auto bg-white shadow rounded-lg p-6">
+            {/* TITLE */}
+            <div className="border-gray-200 pb-8 text-center">
+                <h1 className="text-4xl font-bold text-gray-800 tracking-tight">
+                    Billing Management
+                </h1>
+            </div>
 
-                {/* TITLE */}
-                <div className="border-gray-200 pb-6 mb-2 text-center">
-                    <h1 className="text-3xl font-bold text-gray-800 tracking-tight">
-                        Billing Management
-                    </h1>
-                    <p className="mt-2 text-sm text-gray-500">
-                        Create, preview and print customer invoices
-                    </p>
-                </div>
+            <div className="grid grid-cols-1 xl:grid-cols-2 gap-12 mr-8 ml-8">
 
-                {/* BILL INFORMATION */}
-                <div className="border rounded-lg p-5 mb-6">
+                {/* BILL INFORMATIONS */}
+                <div className="bg-white rounded-xl border shadow-sm p-8">
 
                     <h2 className="text-lg font-semibold text-gray-800 mb-4">Bill Information</h2>
 
@@ -70,7 +67,8 @@ export default function PrintBill() {
                 </div>
 
                 {/* ITEM DETAILS */}
-                <div className="border rounded-lg p-5 mb-6">
+                <div className="bg-white rounded-xl border shadow-sm p-8">
+
                     <h2 className="text-lg font-semibold text-gray-800 mb-4">Item Details</h2>
 
                     <div className="grid grid-cols-1 md:grid-cols-5 gap-4 items-end">
@@ -106,41 +104,8 @@ export default function PrintBill() {
                     </div>
                 </div>
 
-                {/* TABLE */}
-                <div className="rounded-lg overflow-hidden border">
-                    <table className="w-full">
-                        <thead className="bg-gray-200">
-                        <tr>
-                            <th className="border p-2">Item</th>
-                            <th className="border p-2">Qty</th>
-                            <th className="border p-2">Unit Price</th>
-                            <th className="border p-2">Total</th>
-                            <th className="border p-2">Action</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {
-                            items.map((item, index) => (
-                                <tr key={index}>
-                                    <td className="border p-2">{item.name}</td>
-                                    <td className="border p-2 text-center">{item.qty}</td>
-                                    <td className="border p-2 text-center">{item.unitPrice.toFixed(2)}</td>
-                                    <td className="border p-2 text-center">{item.total.toFixed(2)}</td>
-                                    <td className="border p-2 text-center">
-                                        <button title="Delete" onClick={() => deleteItem(index)}
-                                                className="text-red-500 hover:text-red-700 transition-colors duration-200">
-                                            <HiOutlineTrash size={20}/>
-                                        </button>
-                                    </td>
-                                </tr>
-                            ))
-                        }
-                        </tbody>
-                    </table>
-                </div>
-
-                {/* SUMMERY */}
-                <div className="p-5 mt-6">
+                {/* BILL SUMMERY */}
+                <div className="bg-white rounded-xl border shadow-sm p-8">
                     <h2 className="text-lg font-semibold text-gray-800 mb-4">
                         Bill Summary
                     </h2>
@@ -183,13 +148,47 @@ export default function PrintBill() {
                     </div>
                 </div>
 
-                {/* PREVIEW BUTTON */}
-                <div className="flex justify-center mt-2">
-                    <button onClick={() => setShowPreview(true)}
-                            className="px-10 py-3 rounded-md bg-sky-600 hover:bg-sky-700 text-white font-medium shadow transition outline-none">
-                        Preview Invoice
-                    </button>
+                {/* ITEM TABLE */}
+                <div className="bg-white rounded-xl border shadow-sm p-8 overflow-hidden">
+                    <table className="w-full">
+                        <thead className="bg-gray-200">
+                        <tr>
+                            <th className="border p-2">Item</th>
+                            <th className="border p-2">Qty</th>
+                            <th className="border p-2">Unit Price</th>
+                            <th className="border p-2">Total</th>
+                            <th className="border p-2">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {
+                            items.map((item, index) => (
+                                <tr key={index}>
+                                    <td className="border p-2">{item.name}</td>
+                                    <td className="border p-2 text-center">{item.qty}</td>
+                                    <td className="border p-2 text-center">{item.unitPrice.toFixed(2)}</td>
+                                    <td className="border p-2 text-center">{item.total.toFixed(2)}</td>
+                                    <td className="border p-2 text-center">
+                                        <button title="Delete" onClick={() => deleteItem(index)}
+                                                className="text-red-500 hover:text-red-700 transition-colors duration-200">
+                                            <HiOutlineTrash size={20}/>
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))
+                        }
+                        </tbody>
+                    </table>
                 </div>
+
+            </div>
+
+            {/* PREVIEW BUTTON */}
+            <div className="flex justify-center mt-7">
+                <button onClick={() => setShowPreview(true)}
+                        className="px-10 py-3 rounded-md bg-sky-600 hover:bg-sky-700 text-white font-medium shadow transition outline-none">
+                    Preview Invoice
+                </button>
             </div>
 
             {/* PREVIEW MODAL */}
