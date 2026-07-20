@@ -38,137 +38,156 @@ export default function PrintBill() {
         <div className="min-h-screen bg-gray-100 p-14">
 
             <div className="max-w-4xl mx-auto bg-white shadow rounded-lg p-6">
-                <h1 className="text-3xl font-bold text-center mb-6">Bill</h1>
 
-                {/* BILL DETAILS */}
-                <div className="grid grid-cols-2 gap-4 mb-6">
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Bill No</label>
-                        <input
-                            value={billNo}
-                            onChange={(e) => setBillNo(e.target.value)}
-                            className="w-full border rounded p-2 outline-none focus:ring-2 focus:ring-sky-300 focus:border-sky-400"
-                        />
-                    </div>
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Cashier</label>
-                        <input
-                            value={cashier}
-                            onChange={(e) => setCashier(e.target.value)}
-                            className="w-full border rounded p-2 outline-none focus:ring-2 focus:ring-sky-300 focus:border-sky-400"
-                        />
+                {/* TITLE */}
+                <div className="border-gray-200 pb-6 mb-2 text-center">
+                    <h1 className="text-3xl font-bold text-gray-800 tracking-tight">
+                        Billing Management
+                    </h1>
+                    <p className="mt-2 text-sm text-gray-500">
+                        Create, preview and print customer invoices
+                    </p>
+                </div>
+
+                {/* BILL INFORMATION */}
+                <div className="border rounded-lg p-5 mb-6">
+
+                    <h2 className="text-lg font-semibold text-gray-800 mb-4">Bill Information</h2>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">Bill No</label>
+                            <input value={billNo} onChange={(e) => setBillNo(e.target.value)}
+                                   className="w-full border rounded p-2 outline-none focus:ring-2 focus:ring-sky-300 focus:border-sky-400"/>
+                        </div>
+
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">Cashier</label>
+                            <input value={cashier} onChange={(e) => setCashier(e.target.value)}
+                                   className="w-full border rounded p-2 outline-none focus:ring-2 focus:ring-sky-300 focus:border-sky-400"/>
+                        </div>
                     </div>
                 </div>
 
-                {/* ITEM ADD */}
-                <div className="grid grid-cols-4 gap-4 mb-4">
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Item</label>
-                        <input
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                            className="border rounded p-2 outline-none focus:ring-2 focus:ring-sky-300 focus:border-sky-400"
-                        />
-                    </div>
+                {/* ITEM DETAILS */}
+                <div className="border rounded-lg p-5 mb-6">
+                    <h2 className="text-lg font-semibold text-gray-800 mb-4">Item Details</h2>
 
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Qty</label>
-                        <input
-                            type="number"
-                            value={qty}
-                            onChange={(e) => setQty(Number(e.target.value))}
-                            className="border rounded p-2 outline-none focus:ring-2 focus:ring-sky-300 focus:border-sky-400"
-                        />
-                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-5 gap-4 items-end">
+                        {/* Item */}
+                        <div className="md:col-span-2">
+                            <label className="block text-sm font-medium text-gray-700 mb-1">Item</label>
+                            <input value={name} onChange={(e) => setName(e.target.value)}
+                                   className="w-full border rounded p-2 outline-none focus:ring-2 focus:ring-sky-300 focus:border-sky-400"/>
+                        </div>
 
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Unit Price</label>
-                        <input
-                            type="number"
-                            value={unitPrice}
-                            onChange={(e) => setUnitPrice(Number(e.target.value))}
-                            className="border rounded p-2 outline-none focus:ring-2 focus:ring-sky-300 focus:border-sky-400"
-                        />
-                    </div>
+                        {/* Qty */}
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">Qty</label>
+                            <input type="number" value={qty} onChange={(e) => setQty(Number(e.target.value))}
+                                   className="w-full border rounded p-2 outline-none focus:ring-2 focus:ring-sky-300 focus:border-sky-400"/>
+                        </div>
 
-                    <div className="flex items-end">
-                        <button onClick={addItem}
-                                className="w-full p-2 bg-green-600 text-white rounded hover:bg-green-700 transition">
-                            + Add
-                        </button>
+                        {/* Unit Price */}
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">Unit Price</label>
+                            <input type="number" value={unitPrice}
+                                   onChange={(e) => setUnitPrice(Number(e.target.value))}
+                                   className="w-full border rounded p-2 outline-none focus:ring-2 focus:ring-sky-300 focus:border-sky-400"/>
+                        </div>
+
+                        {/* Add Button */}
+                        <div>
+                            <button onClick={addItem}
+                                    className="w-full bg-sky-600 hover:bg-sky-700 text-white rounded-md py-2 font-medium transition outline-none">
+                                Add Item
+                            </button>
+                        </div>
                     </div>
                 </div>
 
-                <table className="w-full border mb-6">
-                    <thead className="bg-gray-200">
-                    <tr>
-                        <th className="border p-2">Item</th>
-                        <th className="border p-2">Qty</th>
-                        <th className="border p-2">Unit Price</th>
-                        <th className="border p-2">Total</th>
-                        <th className="border p-2">Action</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {
-                        items.map((item, index) => (
-                            <tr key={index}>
-                                <td className="border p-2">{item.name}</td>
-                                <td className="border p-2 text-center">{item.qty}</td>
-                                <td className="border p-2 text-right">{item.unitPrice.toFixed(2)}</td>
-                                <td className="border p-2 text-right">{item.total.toFixed(2)}</td>
-                                <td className="border p-2 text-center">
-                                    <button title="Delete" onClick={() => deleteItem(index)}
-                                            className="text-red-500 hover:text-red-700 transition-colors duration-200">
-                                        <HiOutlineTrash size={20}/>
-                                    </button>
-                                </td>
-                            </tr>
-                        ))
-                    }
-                    </tbody>
-                </table>
-
-                <div className="flex justify-center mb-4">
-                    <table className="w-full border">
+                {/* TABLE */}
+                <div className="rounded-lg overflow-hidden border">
+                    <table className="w-full">
+                        <thead className="bg-gray-200">
+                        <tr>
+                            <th className="border p-2">Item</th>
+                            <th className="border p-2">Qty</th>
+                            <th className="border p-2">Unit Price</th>
+                            <th className="border p-2">Total</th>
+                            <th className="border p-2">Action</th>
+                        </tr>
+                        </thead>
                         <tbody>
-                        <tr>
-                            <td className="border p-2">Sub Total</td>
-                            <td className="border p-2 text-right">{subTotal.toFixed(2)}</td>
-                        </tr>
-                        <tr>
-                            <td className="border p-2">Service Charge</td>
-                            <td className="border p-2 text-right">
-                                <input
-                                    type="number"
-                                    value={serviceCharge}
-                                    onChange={(e) => setServiceCharge(Number(e.target.value))}
-                                    className="w-full text-right rounded outline-none focus:ring-2 focus:ring-sky-300 focus:border-sky-400"
-                                />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td className="border p-2">Discount</td>
-                            <td className="border p-2 text-right">
-                                <input
-                                    type="number"
-                                    value={discount}
-                                    onChange={(e) => setDiscount(Number(e.target.value))}
-                                    className="w-full text-right rounded outline-none focus:ring-2 focus:ring-sky-300 focus:border-sky-400"
-                                />
-                            </td>
-                        </tr>
-                        <tr className="font-bold text">
-                            <td className="border p-2">Total</td>
-                            <td className="border p-2 text-right">{total.toFixed(2)}</td>
-                        </tr>
+                        {
+                            items.map((item, index) => (
+                                <tr key={index}>
+                                    <td className="border p-2">{item.name}</td>
+                                    <td className="border p-2 text-center">{item.qty}</td>
+                                    <td className="border p-2 text-center">{item.unitPrice.toFixed(2)}</td>
+                                    <td className="border p-2 text-center">{item.total.toFixed(2)}</td>
+                                    <td className="border p-2 text-center">
+                                        <button title="Delete" onClick={() => deleteItem(index)}
+                                                className="text-red-500 hover:text-red-700 transition-colors duration-200">
+                                            <HiOutlineTrash size={20}/>
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))
+                        }
                         </tbody>
                     </table>
                 </div>
 
-                <div className="flex justify-center mt-6">
+                {/* SUMMERY */}
+                <div className="p-5 mt-6">
+                    <h2 className="text-lg font-semibold text-gray-800 mb-4">
+                        Bill Summary
+                    </h2>
+
+                    <div className="rounded-lg overflow-hidden border">
+                        <table className="w-full border">
+                            <tbody>
+                            <tr>
+                                <td className="border p-2">Sub Total</td>
+                                <td className="border p-2 text-right">{subTotal.toFixed(2)}</td>
+                            </tr>
+                            <tr>
+                                <td className="border p-2">Service Charge</td>
+                                <td className="border p-2 text-right">
+                                    <input
+                                        type="number"
+                                        value={serviceCharge}
+                                        onChange={(e) => setServiceCharge(Number(e.target.value))}
+                                        className="w-full text-right rounded outline-none focus:ring-2 focus:ring-sky-300 focus:border-sky-400"
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td className="border p-2">Discount</td>
+                                <td className="border p-2 text-right">
+                                    <input
+                                        type="number"
+                                        value={discount}
+                                        onChange={(e) => setDiscount(Number(e.target.value))}
+                                        className="w-full text-right rounded outline-none focus:ring-2 focus:ring-sky-300 focus:border-sky-400"
+                                    />
+                                </td>
+                            </tr>
+                            <tr className="font-bold text">
+                                <td className="border p-2">Total</td>
+                                <td className="border p-2 text-right">{total.toFixed(2)}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                {/* PREVIEW BUTTON */}
+                <div className="flex justify-center mt-2">
                     <button onClick={() => setShowPreview(true)}
-                            className="bg-blue-600 text-white px-8 py-3 rounded hover:bg-blue-700 transition-colors">Preview
+                            className="px-10 py-3 rounded-md bg-sky-600 hover:bg-sky-700 text-white font-medium shadow transition outline-none">
+                        Preview Invoice
                     </button>
                 </div>
             </div>
@@ -245,10 +264,10 @@ export default function PrintBill() {
                                         className="w-1/3 bg-gray-400 text-white py-2 rounded">Cancel
                                 </button>
                                 <button onClick={downloadBill}
-                                        className="w-1/3 bg-blue-600 text-white py-2 rounded">Download
+                                        className="w-1/3 bg-green-600 text-white py-2 rounded">Download
                                 </button>
                                 <button onClick={confirmPrint}
-                                        className="w-1/3 bg-green-600 text-white py-2 rounded">Print
+                                        className="w-1/3 bg-blue-600 text-white py-2 rounded">Print
                                 </button>
                             </div>
                         </div>
