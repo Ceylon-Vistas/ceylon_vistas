@@ -1,7 +1,7 @@
 import type {BillItem} from "./BillItem";
 
 export interface Bill {
-    receiptNo: string;
+    billNo: string;
     cashier: string;
     date: string;
     time: string;

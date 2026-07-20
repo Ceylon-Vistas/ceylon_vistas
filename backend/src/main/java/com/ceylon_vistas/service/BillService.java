@@ -16,7 +16,7 @@ public class BillService {
 
     public Bill save(BillDTO dto) {
         Bill bill = new Bill();
-        bill.setReceiptNo(dto.getReceiptNo());
+        bill.setBillNo(dto.getBillNo());
         bill.setDate(dto.getDate());
         bill.setTime(dto.getTime());
         bill.setCashier(dto.getCashier());

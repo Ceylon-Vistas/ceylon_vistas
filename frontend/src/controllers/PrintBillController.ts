@@ -8,7 +8,7 @@ import type {Bill} from "../models/Bill";
 import type {BillItem} from "../models/BillItem";
 
 export default function usePrintBillController() {
-    const [receiptNo, setReceiptNo] = useState("");
+    const [billNo, setBillNo] = useState("");
     const [cashier, setCashier] = useState("");
 
     const [name, setName] = useState("");
@@ -63,7 +63,7 @@ export default function usePrintBillController() {
     }).replace(/\s+(AM|PM)$/, "$1");
 
     const bill: Bill = {
-        receiptNo,
+        billNo,
         cashier,
         date: currentDate,
         time: currentTime,
@@ -117,11 +117,11 @@ export default function usePrintBillController() {
             imgHeight
         );
 
-        pdf.save(`${receiptNo}.pdf`);
+        pdf.save(`${billNo}.pdf`);
     };
 
     return {
-        receiptNo,
+        billNo,
         cashier,
         name,
         qty,
@@ -132,7 +132,7 @@ export default function usePrintBillController() {
         showPreview,
         previewRef,
 
-        setReceiptNo,
+        setBillNo,
         setCashier,
         setName,
         setQty,

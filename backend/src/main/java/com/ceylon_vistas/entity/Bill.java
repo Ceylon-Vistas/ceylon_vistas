@@ -14,7 +14,7 @@ public class Bill {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String receiptNo;
+    private String billNo;
     private String cashier;
     private String date;
     private String time;

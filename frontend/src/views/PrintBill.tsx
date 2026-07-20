@@ -3,7 +3,7 @@ import usePrintBillController from "../controllers/PrintBillController";
 
 export default function PrintBill() {
     const {
-        receiptNo,
+        billNo,
         cashier,
         name,
         qty,
@@ -14,7 +14,7 @@ export default function PrintBill() {
         showPreview,
         previewRef,
 
-        setReceiptNo,
+        setBillNo,
         setCashier,
         setName,
         setQty,
@@ -43,9 +43,9 @@ export default function PrintBill() {
                 {/* BILL DETAILS */}
                 <div className="grid grid-cols-2 gap-4 mb-6">
                     <input
-                        placeholder="Receipt No"
-                        value={receiptNo}
-                        onChange={(e) => setReceiptNo(e.target.value)}
+                        placeholder="Bill No"
+                        value={billNo}
+                        onChange={(e) => setBillNo(e.target.value)}
                         className="border rounded p-2 outline-none focus:ring-2 focus:ring-sky-300 focus:border-sky-400"
                     />
                     <input
@@ -59,7 +59,7 @@ export default function PrintBill() {
                 {/* ITEM ADD */}
                 <div className="grid grid-cols-4 gap-4 mb-4">
                     <input
-                        placeholder="Name"
+                        placeholder="Item"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         className="border rounded p-2 outline-none focus:ring-2 focus:ring-sky-300 focus:border-sky-400"
@@ -77,7 +77,7 @@ export default function PrintBill() {
                         className="border rounded p-2 outline-none focus:ring-2 focus:ring-sky-300 focus:border-sky-400"
                     />
                     <button onClick={addItem} className="bg-green-600 text-white rounded">
-                        Add Item
+                        + Add
                     </button>
                 </div>
 
@@ -169,7 +169,7 @@ export default function PrintBill() {
 
                                 <div className="mt-4">
                                     <div className="flex justify-between">
-                                        <span>Receipt: {receiptNo}</span>
+                                        <span>Bill No: {billNo}</span>
                                         <span>Date: {currentDate}</span>
                                     </div>
                                     <div className="flex justify-between">
@@ -199,7 +199,7 @@ export default function PrintBill() {
                                 <hr className="my-3"/>
 
                                 <div className="flex justify-between">
-                                    <span>Bill Amount</span>
+                                    <span>Sub Total</span>
                                     <span>{subTotal.toFixed(2)}</span>
                                 </div>
                                 <div className="flex justify-between">

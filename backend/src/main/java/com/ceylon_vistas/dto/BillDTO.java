@@ -6,7 +6,7 @@ import java.util.List;
 
 @Data
 public class BillDTO {
-    private String receiptNo;
+    private String billNo;
     private String cashier;
     private String date;
     private String time;

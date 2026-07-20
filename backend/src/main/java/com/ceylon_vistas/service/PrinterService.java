@@ -27,7 +27,7 @@ public class PrinterService {
             sb.append(center("Palatugaha Road, Talpe, Galle")).append("\n");
             sb.append(center("ceylonvistas@gmail.com")).append("\n");
             sb.append(center("077 002 9960")).append("\n\n");
-            sb.append(leftRight("Receipt: " + dto.getReceiptNo(), "Date: " + dto.getDate())).append("\n");
+            sb.append(leftRight("Bill No: " + dto.getBillNo(), "Date: " + dto.getDate())).append("\n");
             sb.append(leftRight("Cashier: " + dto.getCashier(), "Time: " + dto.getTime())).append("\n");
 
             sb.append("-----------------------------------------------\n");
@@ -80,7 +80,7 @@ public class PrinterService {
 
             sb.append("-----------------------------------------------\n");
 
-            sb.append(leftRight("Bill Amount", format(dto.getSubTotal()))).append("\n");
+            sb.append(leftRight("Sub Total", format(dto.getSubTotal()))).append("\n");
             sb.append(leftRight("Service Charge", format(dto.getServiceCharge()))).append("\n");
             sb.append(leftRight("Discount", format(dto.getDiscount()))).append("\n");
             sb.append(leftRight("Total", format(dto.getTotal()))).append("\n");
@@ -119,7 +119,7 @@ public class PrinterService {
                 out.write(new byte[]{0x1B, 0x61, 0x00});
 
                 StringBuilder sb = new StringBuilder();
-                sb.append(leftRight("Receipt: " + dto.getReceiptNo(), "Date: " + dto.getDate())).append("\n");
+                sb.append(leftRight("Bill No: " + dto.getBillNo(), "Date: " + dto.getDate())).append("\n");
                 sb.append(leftRight("Cashier: " + dto.getCashier(), "Time: " + dto.getTime())).append("\n");
 
                 sb.append("-----------------------------------------------\n");
@@ -172,7 +172,7 @@ public class PrinterService {
 
                 sb.append("-----------------------------------------------\n");
 
-                sb.append(leftRight("Bill Amount", format(dto.getSubTotal()))).append("\n");
+                sb.append(leftRight("Sub Total", format(dto.getSubTotal()))).append("\n");
                 sb.append(leftRight("Service Charge", format(dto.getServiceCharge()))).append("\n");
                 sb.append(leftRight("Discount", format(dto.getDiscount()))).append("\n");
                 sb.append(leftRight("Total", format(dto.getTotal()))).append("\n");
