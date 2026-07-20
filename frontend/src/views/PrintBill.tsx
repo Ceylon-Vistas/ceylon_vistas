@@ -1,131 +1,45 @@
-import {useRef, useState} from "react";
-import html2canvas from "html2canvas";
-import jsPDF from "jspdf";
 import {HiOutlineTrash} from "react-icons/hi";
-import {successNotification, errorNotification} from "../util/alert";
-import {printBill} from "../controllers/PrintBillController";
-import type {Bill} from "../models/Bill";
-import type {BillItem} from "../models/BillItem";
+import usePrintBillController from "../controllers/PrintBillController";
 
 export default function PrintBill() {
-    const [receiptNo, setReceiptNo] = useState("");
-    const [cashier, setCashier] = useState("");
 
-    const [name, setName] = useState("");
-    const [qty, setQty] = useState(1);
-    const [unitPrice, setUnitPrice] = useState(0);
-
-    const [items, setItems] = useState<BillItem[]>([]);
-    const [serviceCharge, setServiceCharge] = useState(0);
-    const [discount, setDiscount] = useState(0);
-
-    const [showPreview, setShowPreview] = useState(false);
-    const previewRef = useRef<HTMLDivElement>(null);
-
-    const addItem = () => {
-        if (!name || qty <= 0 || unitPrice <= 0) {
-            errorNotification("Please enter valid item details");
-            return;
-        }
-        const item: BillItem = {
-            name: name,
-            qty,
-            unitPrice,
-            total: qty * unitPrice
-        };
-
-        setItems([...items, item]);
-
-        setName("");
-        setQty(1);
-        setUnitPrice(0);
-    };
-
-    const subTotal = items.reduce(
-        (sum, item) => sum + item.total,
-        0
-    );
-
-    const total = subTotal + serviceCharge - discount;
-
-    const now = new Date();
-    const currentDate = now.toISOString().split("T")[0];
-    const currentTime = now.toLocaleTimeString("en-US", {
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-        hour12: true
-    }).replace(/\s+(AM|PM)$/, "$1");
-
-    const bill: Bill = {
+    const {
         receiptNo,
-        date: currentDate,
-        time: currentTime,
         cashier,
+        name,
+        qty,
+        unitPrice,
         items,
-        subTotal,
         serviceCharge,
         discount,
-        total
-    };
+        showPreview,
+        previewRef,
 
-    const confirmPrint = async () => {
-        try {
-            await printBill(bill);
-            successNotification("Bill Printed Successfully");
-            setShowPreview(false);
-        } catch (error) {
-            errorNotification("Printing Failed");
-        }
-    };
+        setReceiptNo,
+        setCashier,
+        setName,
+        setQty,
+        setUnitPrice,
+        setServiceCharge,
+        setDiscount,
+        setShowPreview,
 
-    const deleteItem = (index: number) => {
-        setItems(items.filter((_, i) => i !== index));
-    };
+        addItem,
+        deleteItem,
+        confirmPrint,
+        downloadBill,
 
-    const downloadBill = async () => {
-        if (!previewRef.current) return;
-
-        const canvas = await html2canvas(previewRef.current, {
-            scale: 2,
-            scrollY: -window.scrollY,
-            useCORS: true
-        });
-
-        const imgData = canvas.toDataURL("image/png");
-
-        const pdfWidth = 105;
-        const imgWidth = 90;
-
-        const imgHeight = (canvas.height * imgWidth) / canvas.width;
-
-        const pdf = new jsPDF({
-            orientation: "portrait",
-            unit: "mm",
-            format: [pdfWidth, imgHeight + 20]
-        });
-
-        const x = (pdfWidth - imgWidth) / 2;
-
-        pdf.addImage(
-            imgData,
-            "PNG",
-            x,
-            10,
-            imgWidth,
-            imgHeight
-        );
-
-        pdf.save(`${receiptNo}.pdf`);
-    };
+        subTotal,
+        total,
+        currentDate,
+        currentTime
+    } = usePrintBillController();
 
     return (
         <div className="min-h-screen bg-gray-100 p-10">
 
             <div className="max-w-4xl mx-auto bg-white shadow rounded-lg p-6">
-                <h1 className="text-3xl font-bold text-center mb-6">
-                    Print Bill
-                </h1>
+                <h1 className="text-3xl font-bold text-center mb-6">Print Bill</h1>
 
                 {/* BILL DETAILS */}
                 <div className="grid grid-cols-2 gap-4 mb-6">
@@ -166,8 +80,8 @@ export default function PrintBill() {
                     <button onClick={addItem} className="bg-green-600 text-white rounded">
                         Add Item
                     </button>
-
                 </div>
+
                 <table className="w-full border mb-6">
                     <thead className="bg-gray-200">
                     <tr>
@@ -178,7 +92,6 @@ export default function PrintBill() {
                         <th className="border p-2">Action</th>
                     </tr>
                     </thead>
-
                     <tbody>
                     {
                         items.map((item, index) => (
@@ -204,11 +117,8 @@ export default function PrintBill() {
                         <tbody>
                         <tr>
                             <td className="border p-2">Sub Total</td>
-                            <td className="border p-2 text-right">
-                                {subTotal.toFixed(2)}
-                            </td>
+                            <td className="border p-2 text-right">{subTotal.toFixed(2)}</td>
                         </tr>
-
                         <tr>
                             <td className="border p-2">Service Charge</td>
                             <td className="border p-2 text-right">
@@ -220,7 +130,6 @@ export default function PrintBill() {
                                 />
                             </td>
                         </tr>
-
                         <tr>
                             <td className="border p-2">Discount</td>
                             <td className="border p-2 text-right">
@@ -232,12 +141,9 @@ export default function PrintBill() {
                                 />
                             </td>
                         </tr>
-
                         <tr className="font-bold text">
                             <td className="border p-2">Total</td>
-                            <td className="border p-2 text-right">
-                                {total.toFixed(2)}
-                            </td>
+                            <td className="border p-2 text-right">{total.toFixed(2)}</td>
                         </tr>
                         </tbody>
                     </table>
@@ -245,8 +151,7 @@ export default function PrintBill() {
 
                 <div className="flex justify-center mt-6">
                     <button onClick={() => setShowPreview(true)}
-                            className="bg-blue-600 text-white px-8 py-3 rounded hover:bg-blue-700 transition-colors">
-                        Preview
+                            className="bg-blue-600 text-white px-8 py-3 rounded hover:bg-blue-700 transition-colors">Preview
                     </button>
                 </div>
             </div>
@@ -298,17 +203,14 @@ export default function PrintBill() {
                                     <span>Bill Amount</span>
                                     <span>{subTotal.toFixed(2)}</span>
                                 </div>
-
                                 <div className="flex justify-between">
                                     <span>Service Charge</span>
                                     <span>{serviceCharge.toFixed(2)}</span>
                                 </div>
-
                                 <div className="flex justify-between">
                                     <span>Discount</span>
                                     <span>{discount.toFixed(2)}</span>
                                 </div>
-
                                 <div className="flex justify-between font-bold">
                                     <span>Total</span>
                                     <span>{total.toFixed(2)}</span>
@@ -322,20 +224,14 @@ export default function PrintBill() {
                             </div>
 
                             <div className="flex gap-3 mt-5">
-                                <button
-                                    onClick={() => setShowPreview(false)}
-                                    className="w-1/3 bg-gray-400 text-white py-2 rounded">
-                                    Cancel
+                                <button onClick={() => setShowPreview(false)}
+                                        className="w-1/3 bg-gray-400 text-white py-2 rounded">Cancel
                                 </button>
-                                <button
-                                    onClick={downloadBill}
-                                    className="w-1/3 bg-blue-600 text-white py-2 rounded">
-                                    Download
+                                <button onClick={downloadBill}
+                                        className="w-1/3 bg-blue-600 text-white py-2 rounded">Download
                                 </button>
-                                <button
-                                    onClick={confirmPrint}
-                                    className="w-1/3 bg-green-600 text-white py-2 rounded">
-                                    Print
+                                <button onClick={confirmPrint}
+                                        className="w-1/3 bg-green-600 text-white py-2 rounded">Print
                                 </button>
                             </div>
                         </div>
