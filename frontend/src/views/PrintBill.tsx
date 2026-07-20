@@ -35,7 +35,7 @@ export default function PrintBill() {
     } = usePrintBillController();
 
     return (
-        <div className="min-h-screen bg-gray-100 p-10">
+        <div className="min-h-screen bg-gray-100 p-14">
 
             <div className="max-w-4xl mx-auto bg-white shadow rounded-lg p-6">
                 <h1 className="text-3xl font-bold text-center mb-6">Bill</h1>
