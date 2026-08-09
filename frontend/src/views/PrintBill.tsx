@@ -25,6 +25,11 @@ export default function PrintBill() {
 
         addItem,
         deleteItem,
+
+        handleDragStart,
+        handleDragOver,
+        handleDrop,
+
         confirmPrint,
         downloadBill,
 
@@ -163,7 +168,9 @@ export default function PrintBill() {
                         <tbody>
                         {
                             items.map((item, index) => (
-                                <tr key={index}>
+                                <tr key={index} draggable onDragStart={() => handleDragStart(index)}
+                                    onDragOver={handleDragOver} onDrop={() => handleDrop(index)}
+                                    className="cursor-grab active:cursor-grabbing hover:bg-gray-50">
                                     <td className="border p-2">{item.name}</td>
                                     <td className="border p-2 text-center">{item.qty}</td>
                                     <td className="border p-2 text-center">{item.unitPrice.toFixed(2)}</td>
@@ -171,8 +178,7 @@ export default function PrintBill() {
                                     <td className="border p-2 text-center">
                                         <button title="Delete" onClick={() => deleteItem(index)}
                                                 className="text-red-500 hover:text-red-700 transition-colors duration-200">
-                                            <HiOutlineTrash size={20}/>
-                                        </button>
+                                            <HiOutlineTrash size={20}/></button>
                                     </td>
                                 </tr>
                             ))

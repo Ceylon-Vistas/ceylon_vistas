@@ -22,6 +22,8 @@ export default function usePrintBillController() {
     const [showPreview, setShowPreview] = useState(false);
     const previewRef = useRef<HTMLDivElement>(null);
 
+    const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
+
     const addItem = () => {
         if (!name || qty <= 0 || unitPrice <= 0) {
             errorNotification("Please enter valid item details");
@@ -40,6 +42,27 @@ export default function usePrintBillController() {
         setName("");
         setQty(1);
         setUnitPrice(0);
+    };
+
+    const handleDragStart = (index: number) => {
+        setDraggedIndex(index);
+    };
+
+    const handleDragOver = (e: React.DragEvent<HTMLTableRowElement>) => {
+        e.preventDefault();
+    };
+
+    const handleDrop = (dropIndex: number) => {
+        if (draggedIndex === null || draggedIndex === dropIndex) return;
+
+        const newItems = [...items];
+        const draggedItem = newItems[draggedIndex];
+
+        newItems.splice(draggedIndex, 1);
+        newItems.splice(dropIndex, 0, draggedItem);
+
+        setItems(newItems);
+        setDraggedIndex(null);
     };
 
     const deleteItem = (index: number) => {
@@ -144,6 +167,11 @@ export default function usePrintBillController() {
 
         addItem,
         deleteItem,
+
+        handleDragStart,
+        handleDragOver,
+        handleDrop,
+
         confirmPrint,
         downloadBill,
 
@@ -151,6 +179,6 @@ export default function usePrintBillController() {
         total,
         bill,
         currentDate,
-        currentTime
+        currentTime,
     };
 }
