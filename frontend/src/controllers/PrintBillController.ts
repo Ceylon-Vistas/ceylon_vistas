@@ -1,5 +1,5 @@
 import axios from "axios";
-import {useState, useRef} from "react";
+import {useState, useRef, useEffect} from "react";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import {BASE_URL} from "../config/api";
@@ -23,6 +23,26 @@ export default function usePrintBillController() {
     const previewRef = useRef<HTMLDivElement>(null);
 
     const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
+    const [editingIndex, setEditingIndex] = useState<number | null>(null);
+    const editingRowRef = useRef<HTMLTableRowElement>(null);
+
+    useEffect(() => {
+        const handleClickOutside = (e: MouseEvent) => {
+            if (
+                editingIndex !== null &&
+                editingRowRef.current &&
+                !editingRowRef.current.contains(e.target as Node)
+            ) {
+                setEditingIndex(null);
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [editingIndex]);
 
     const addItem = () => {
         if (!name || qty <= 0 || unitPrice <= 0) {
@@ -44,6 +64,35 @@ export default function usePrintBillController() {
         setUnitPrice(0);
     };
 
+    const deleteItem = (index: number) => {
+        setItems(items.filter((_, i) => i !== index));
+    };
+
+    const editItem = (index: number) => {
+        setEditingIndex(index);
+    };
+
+    const updateItem = (
+        index: number,
+        field: "name" | "qty" | "unitPrice",
+        value: string | number
+    ) => {
+        const updatedItems = [...items];
+
+        updatedItems[index] = {
+            ...updatedItems[index],
+            [field]: value,
+            total:
+                field === "qty"
+                    ? Number(value) * updatedItems[index].unitPrice
+                    : field === "unitPrice"
+                        ? updatedItems[index].qty * Number(value)
+                        : updatedItems[index].total
+        };
+
+        setItems(updatedItems);
+    };
+
     const handleDragStart = (index: number) => {
         setDraggedIndex(index);
     };
@@ -63,10 +112,6 @@ export default function usePrintBillController() {
 
         setItems(newItems);
         setDraggedIndex(null);
-    };
-
-    const deleteItem = (index: number) => {
-        setItems(items.filter((_, i) => i !== index));
     };
 
     const subTotal = items.reduce(
@@ -167,6 +212,11 @@ export default function usePrintBillController() {
 
         addItem,
         deleteItem,
+
+        editItem,
+        updateItem,
+        editingIndex,
+        editingRowRef,
 
         handleDragStart,
         handleDragOver,

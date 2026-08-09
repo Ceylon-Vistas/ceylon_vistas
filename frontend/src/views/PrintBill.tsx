@@ -26,6 +26,11 @@ export default function PrintBill() {
         addItem,
         deleteItem,
 
+        editItem,
+        updateItem,
+        editingIndex,
+        editingRowRef,
+
         handleDragStart,
         handleDragOver,
         handleDrop,
@@ -168,17 +173,52 @@ export default function PrintBill() {
                         <tbody>
                         {
                             items.map((item, index) => (
-                                <tr key={index} draggable onDragStart={() => handleDragStart(index)}
-                                    onDragOver={handleDragOver} onDrop={() => handleDrop(index)}
+                                <tr key={index} ref={editingIndex === index ? editingRowRef : null}
+                                    draggable={editingIndex !== index} onClick={() => editItem(index)}
+                                    onDragStart={() => handleDragStart(index)} onDragOver={handleDragOver}
+                                    onDrop={() => handleDrop(index)}
                                     className="cursor-grab active:cursor-grabbing hover:bg-gray-50">
-                                    <td className="border p-2">{item.name}</td>
-                                    <td className="border p-2 text-center">{item.qty}</td>
-                                    <td className="border p-2 text-center">{item.unitPrice.toFixed(2)}</td>
-                                    <td className="border p-2 text-center">{item.total.toFixed(2)}</td>
+                                    <td className="border p-2">
+                                        {editingIndex === index ? (
+                                            <input autoFocus value={item.name}
+                                                   onChange={(e) => updateItem(index, "name", e.target.value)}
+                                                   className="w-full border rounded p-1 outline-none focus:ring-2 focus:ring-sky-300"/>
+                                        ) : (
+                                            item.name
+                                        )}
+                                    </td>
+
                                     <td className="border p-2 text-center">
-                                        <button title="Delete" onClick={() => deleteItem(index)}
-                                                className="text-red-500 hover:text-red-700 transition-colors duration-200">
-                                            <HiOutlineTrash size={20}/></button>
+                                        {editingIndex === index ? (
+                                            <input type="number" value={item.qty}
+                                                   onChange={(e) => updateItem(index, "qty", Number(e.target.value))}
+                                                   className="w-full border rounded p-1 text-center outline-none focus:ring-2 focus:ring-sky-300"/>
+                                        ) : (
+                                            item.qty
+                                        )}
+                                    </td>
+
+                                    <td className="border p-2 text-center">
+                                        {editingIndex === index ? (
+                                            <input type="number" value={item.unitPrice}
+                                                   onChange={(e) => updateItem(index, "unitPrice", Number(e.target.value))}
+                                                   className="w-full border rounded p-1 text-center outline-none focus:ring-2 focus:ring-sky-300"/>
+                                        ) : (
+                                            item.unitPrice.toFixed(2)
+                                        )}
+                                    </td>
+
+                                    <td className="border p-2 text-center">
+                                        {item.total.toFixed(2)}
+                                    </td>
+
+                                    <td className="border p-2 text-center">
+                                        <button title="Delete" onClick={(e) => {
+                                            e.stopPropagation();
+                                            deleteItem(index);
+                                        }} className="text-red-500 hover:text-red-700 transition-colors duration-200">
+                                            <HiOutlineTrash size={20}/>
+                                        </button>
                                     </td>
                                 </tr>
                             ))
