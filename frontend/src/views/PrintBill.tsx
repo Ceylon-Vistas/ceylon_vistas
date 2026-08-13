@@ -41,7 +41,9 @@ export default function PrintBill() {
         subTotal,
         total,
         currentDate,
-        currentTime
+        currentTime,
+
+        nameInputRef
     } = usePrintBillController();
 
     return (
@@ -85,7 +87,7 @@ export default function PrintBill() {
                         {/* Item */}
                         <div className="md:col-span-2">
                             <label className="block text-sm font-medium text-gray-700 mb-1">Item</label>
-                            <input value={name} onChange={(e) => setName(e.target.value)}
+                            <input value={name} onChange={(e) => setName(e.target.value)} ref={nameInputRef}
                                    className="w-full border rounded p-2 outline-none focus:ring-2 focus:ring-sky-300 focus:border-sky-400"/>
                         </div>
 

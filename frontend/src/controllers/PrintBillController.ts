@@ -25,6 +25,7 @@ export default function usePrintBillController() {
     const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
     const [editingIndex, setEditingIndex] = useState<number | null>(null);
     const editingRowRef = useRef<HTMLTableRowElement>(null);
+    const nameInputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
         const handleClickOutside = (e: MouseEvent) => {
@@ -62,6 +63,10 @@ export default function usePrintBillController() {
         setName("");
         setQty(1);
         setUnitPrice(0);
+
+        setTimeout(() => {
+            nameInputRef.current?.focus();
+        }, 0);
     };
 
     const deleteItem = (index: number) => {
@@ -230,5 +235,7 @@ export default function usePrintBillController() {
         bill,
         currentDate,
         currentTime,
+
+        nameInputRef,
     };
 }
