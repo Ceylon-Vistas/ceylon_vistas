@@ -166,10 +166,10 @@ export default function PrintBill() {
                         <thead className="bg-gray-200">
                         <tr>
                             <th className="border p-2">Item</th>
-                            <th className="border p-2">Qty</th>
-                            <th className="border p-2">Unit Price</th>
-                            <th className="border p-2">Total</th>
-                            <th className="border p-2">Action</th>
+                            <th className="border p-2 w-[15%]">Qty</th>
+                            <th className="border p-2 w-[15%]">Unit Price</th>
+                            <th className="border p-2 w-[15%]">Total</th>
+                            <th className="border p-2 w-[15%]">Action</th>
                         </tr>
                         </thead>
                         <tbody>
