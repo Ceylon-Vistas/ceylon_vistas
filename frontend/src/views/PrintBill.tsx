@@ -123,7 +123,7 @@ export default function PrintBill() {
                     </h2>
 
                     <div className="rounded-lg overflow-hidden border">
-                        <table className="w-full border">
+                        <table className="w-full border table-fixed">
                             <tbody>
                             <tr>
                                 <td className="border p-2">Sub Total</td>
@@ -186,7 +186,9 @@ export default function PrintBill() {
                                                    onChange={(e) => updateItem(index, "name", e.target.value)}
                                                    className="w-full border rounded p-1 outline-none focus:ring-2 focus:ring-sky-300"/>
                                         ) : (
-                                            item.name
+                                            <div className="whitespace-normal break-words break-all">
+                                                {item.name}
+                                            </div>
                                         )}
                                     </td>
 
@@ -243,9 +245,9 @@ export default function PrintBill() {
             {
                 showPreview && (
                     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-                        <div className="bg-white w-[380px] p-6 shadow-lg font-mono">
+                        <div className="bg-white w-[380px] max-w-[380px] p-6 shadow-lg font-mono overflow-hidden">
 
-                            <div ref={previewRef} className="font-mono">
+                            <div ref={previewRef} className="font-mono w-full min-w-0">
                                 <h2 className="text-center text-xl font-bold mb-2">AERIS ISLAND</h2>
                                 <h6 className="text-center">Palatugaha Road, Talpe, Galle</h6>
                                 <h6 className="text-center">ceylonvistas@gmail.com</h6>
@@ -264,19 +266,25 @@ export default function PrintBill() {
 
                                 <hr className="my-3"/>
 
-                                <div className="flex">
-                                    <span className="w-40">Item</span>
-                                    <span className="w-10 text-center">Qty</span>
-                                    <span className="flex-1 text-right">Amount</span>
+                                <div className="flex w-full">
+                                    <span className="w-[60%] min-w-0">Item</span>
+                                    <span className="w-[12%] text-center">Qty</span>
+                                    <span className="w-[28%] text-right">Amount</span>
                                 </div>
 
                                 <hr className="my-3"/>
 
                                 {items.map((item, index) => (
-                                    <div key={index} className="flex">
-                                        <span className="w-40">{item.name}</span>
-                                        <span className="w-10 text-center">{item.qty}</span>
-                                        <span className="flex-1 text-right">{item.total.toFixed(2)}</span>
+                                    <div key={index} className="flex w-full items-start">
+                                        <span className="w-[60%] min-w-0 whitespace-normal break-words break-all pr-1">
+                                            {item.name}
+                                        </span>
+                                        <span className="w-[12%] text-center shrink-0">
+                                            {item.qty}
+                                        </span>
+                                        <span className="w-[28%] text-right shrink-0">
+                                            {item.total.toFixed(2)}
+                                        </span>
                                     </div>
                                 ))}
 
