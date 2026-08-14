@@ -37,45 +37,12 @@ public class PrinterService {
             sb.append("-----------------------------------------------\n");
 
             for (BillItemDTO item : dto.getItems()) {
-                String name = item.getName();
-                int maxWidth = 30;
-
-                List<String> lines = new ArrayList<>();
-                StringBuilder currentLine = new StringBuilder();
-
-                for (String word : name.split(" ")) {
-                    while (word.length() > maxWidth) {
-                        if (currentLine.length() > 0) {
-                            lines.add(currentLine.toString());
-                            currentLine.setLength(0);
-                        }
-                        lines.add(word.substring(0, maxWidth));
-                        word = word.substring(maxWidth);
-                    }
-
-                    if (currentLine.length() == 0) {
-                        currentLine.append(word);
-                    } else if (currentLine.length() + 1 + word.length() <= maxWidth) {
-                        currentLine.append(" ").append(word);
-                    } else {
-                        lines.add(currentLine.toString());
-                        currentLine.setLength(0);
-                        currentLine.append(word);
-                    }
-                }
-
-                if (currentLine.length() > 0) {
-                    lines.add(currentLine.toString());
-                }
-
-                sb.append(String.format("%-30s %5d %10.2f%n",
-                        lines.get(0),
-                        item.getQty(),
-                        item.getTotal()));
-
+                List<String> lines = wrapItemName(item.getName(), 30);
+                sb.append(String.format("%-30s %5d %10.2f%n", lines.get(0), item.getQty(), item.getTotal()));
                 for (int i = 1; i < lines.size(); i++) {
                     sb.append(String.format("%-30s%n", lines.get(i)));
                 }
+                sb.append("\n");
             }
 
             sb.append("-----------------------------------------------\n");
@@ -129,45 +96,12 @@ public class PrinterService {
                 sb.append("-----------------------------------------------\n");
 
                 for (BillItemDTO item : dto.getItems()) {
-                    String name = item.getName();
-                    int maxWidth = 30;
-
-                    List<String> lines = new ArrayList<>();
-                    StringBuilder currentLine = new StringBuilder();
-
-                    for (String word : name.split(" ")) {
-                        while (word.length() > maxWidth) {
-                            if (currentLine.length() > 0) {
-                                lines.add(currentLine.toString());
-                                currentLine.setLength(0);
-                            }
-                            lines.add(word.substring(0, maxWidth));
-                            word = word.substring(maxWidth);
-                        }
-
-                        if (currentLine.length() == 0) {
-                            currentLine.append(word);
-                        } else if (currentLine.length() + 1 + word.length() <= maxWidth) {
-                            currentLine.append(" ").append(word);
-                        } else {
-                            lines.add(currentLine.toString());
-                            currentLine.setLength(0);
-                            currentLine.append(word);
-                        }
-                    }
-
-                    if (currentLine.length() > 0) {
-                        lines.add(currentLine.toString());
-                    }
-
-                    sb.append(String.format("%-30s %5d %10.2f%n",
-                            lines.get(0),
-                            item.getQty(),
-                            item.getTotal()));
-
+                    List<String> lines = wrapItemName(item.getName(), 30);
+                    sb.append(String.format("%-30s %5d %10.2f%n", lines.get(0), item.getQty(), item.getTotal()));
                     for (int i = 1; i < lines.size(); i++) {
                         sb.append(String.format("%-30s%n", lines.get(i)));
                     }
+                    sb.append("\n");
                 }
 
                 sb.append("-----------------------------------------------\n");
@@ -214,5 +148,37 @@ public class PrinterService {
         if (spaces < 1)
             spaces = 1;
         return left + " ".repeat(spaces) + right;
+    }
+
+    private List<String> wrapItemName(String name, int maxWidth) {
+        List<String> lines = new ArrayList<>();
+        StringBuilder currentLine = new StringBuilder();
+
+        for (String word : name.split(" ")) {
+            while (word.length() > maxWidth) {
+                if (currentLine.length() > 0) {
+                    lines.add(currentLine.toString());
+                    currentLine.setLength(0);
+                }
+                lines.add(word.substring(0, maxWidth));
+                word = word.substring(maxWidth);
+            }
+
+            if (currentLine.length() == 0) {
+                currentLine.append(word);
+            } else if (currentLine.length() + 1 + word.length() <= maxWidth) {
+                currentLine.append(" ").append(word);
+            } else {
+                lines.add(currentLine.toString());
+                currentLine.setLength(0);
+                currentLine.append(word);
+            }
+        }
+
+        if (currentLine.length() > 0) {
+            lines.add(currentLine.toString());
+        }
+
+        return lines;
     }
 }
