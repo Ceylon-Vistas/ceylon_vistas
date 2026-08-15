@@ -1,6 +1,5 @@
 package com.ceylon_vistas.controller;
 
-import com.ceylon_vistas.dto.BillDTO;
 import com.ceylon_vistas.service.BillService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,11 +12,6 @@ public class BillController {
 
     @Autowired
     private BillService billService;
-
-    @PostMapping
-    public ResponseEntity<?> save(@RequestBody BillDTO dto) {
-        return ResponseEntity.ok(billService.save(dto));
-    }
 
     @GetMapping
     public ResponseEntity<?> getAll() {
