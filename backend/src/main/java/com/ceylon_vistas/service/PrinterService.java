@@ -130,26 +130,6 @@ public class PrinterService {
         }
     }
 
-    private String format(double value) {
-        return String.format("%.2f", value);
-    }
-
-    private String center(String text) {
-        int width = 42;
-        if (text.length() >= width)
-            return text;
-        int left = (width - text.length()) / 2;
-        return " ".repeat(left) + text;
-    }
-
-    private String leftRight(String left, String right) {
-        int width = 47;
-        int spaces = width - left.length() - right.length();
-        if (spaces < 1)
-            spaces = 1;
-        return left + " ".repeat(spaces) + right;
-    }
-
     private List<String> wrapItemName(String name, int maxWidth) {
         List<String> lines = new ArrayList<>();
         StringBuilder currentLine = new StringBuilder();
@@ -180,5 +160,25 @@ public class PrinterService {
         }
 
         return lines;
+    }
+
+    private String format(double value) {
+        return String.format("%.2f", value);
+    }
+
+    private String center(String text) {
+        int width = 42;
+        if (text.length() >= width)
+            return text;
+        int left = (width - text.length()) / 2;
+        return " ".repeat(left) + text;
+    }
+
+    private String leftRight(String left, String right) {
+        int width = 47;
+        int spaces = width - left.length() - right.length();
+        if (spaces < 1)
+            spaces = 1;
+        return left + " ".repeat(spaces) + right;
     }
 }
