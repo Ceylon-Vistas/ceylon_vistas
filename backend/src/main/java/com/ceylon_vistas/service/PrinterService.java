@@ -42,7 +42,6 @@ public class PrinterService {
                 for (int i = 1; i < lines.size(); i++) {
                     sb.append(String.format("%-30s%n", lines.get(i)));
                 }
-                sb.append("\n");
             }
 
             sb.append("-----------------------------------------------\n");
@@ -101,7 +100,6 @@ public class PrinterService {
                     for (int i = 1; i < lines.size(); i++) {
                         sb.append(String.format("%-30s%n", lines.get(i)));
                     }
-                    sb.append("\n");
                 }
 
                 sb.append("-----------------------------------------------\n");

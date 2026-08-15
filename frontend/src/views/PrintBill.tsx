@@ -275,10 +275,9 @@ export default function PrintBill() {
                                 <hr className="my-3"/>
 
                                 {items.map((item, index) => (
-                                    <div key={index} className="flex w-full items-start mb-3">
-                                        <span
-                                            className="w-[60%] min-w-0 whitespace-normal break-words break-all pr-1 leading-none">
-                                            {item.name}
+                                    <div key={index} className="flex w-full items-start mb-1">
+                                        <span className={`w-[60%] min-w-0 whitespace-normal break-words break-all pr-1
+                                            ${item.name.length > 20 ? "leading-none" : ""}`}>{item.name}
                                         </span>
                                         <span className="w-[12%] text-center shrink-0">
                                             {item.qty}
