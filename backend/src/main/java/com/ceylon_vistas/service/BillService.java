@@ -43,12 +43,4 @@ public class BillService {
         bill.setItems(billItems);
         return billRepository.save(bill);
     }
-
-    public List<Bill> getAll() {
-        return billRepository.findAll();
-    }
-
-    public Bill getById(Long id) {
-        return billRepository.findById(id).orElseThrow(() -> new RuntimeException("Bill not found"));
-    }
 }
