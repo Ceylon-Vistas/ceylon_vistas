@@ -13,14 +13,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class PrinterService {
+public class PrintService {
 
     @Autowired
     private PrinterConfig printerConfig;
 
     private boolean debug = true;
 
-    public void printBill(BillDTO dto) {
+    public void print(BillDTO dto) {
         if (debug) {
             StringBuilder sb = new StringBuilder();
             sb.append(center("AERIS ISLAND")).append("\n");
