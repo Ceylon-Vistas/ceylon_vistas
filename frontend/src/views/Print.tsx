@@ -1,18 +1,25 @@
 import {HiOutlineTrash} from "react-icons/hi";
-import usePrintBillController from "../controllers/PrintBillController";
+import usePrintController from "../controllers/PrintController.ts";
 
-export default function PrintBill() {
+export default function Print() {
     const {
         billNo,
         cashier,
+        date,
+        time,
         name,
         qty,
         unitPrice,
         items,
+        subTotal,
         serviceCharge,
         discount,
+        total,
         showPreview,
+        editingIndex,
         previewRef,
+        editingRowRef,
+        itemNameInputRef,
 
         setBillNo,
         setCashier,
@@ -25,26 +32,16 @@ export default function PrintBill() {
 
         addItem,
         deleteItem,
-
         editItem,
         updateItem,
-        editingIndex,
-        editingRowRef,
 
         handleDragStart,
         handleDragOver,
         handleDrop,
 
-        confirmPrint,
         downloadBill,
-
-        subTotal,
-        total,
-        currentDate,
-        currentTime,
-
-        nameInputRef
-    } = usePrintBillController();
+        printBill,
+    } = usePrintController();
 
     return (
         <div className="min-h-screen bg-gray-100 p-6">
@@ -52,13 +49,13 @@ export default function PrintBill() {
             {/* TITLE */}
             <div className="border-gray-200 pb-8 text-center">
                 <h1 className="text-4xl font-bold text-gray-800 tracking-tight">
-                    Billing Management
+                    Print Bill
                 </h1>
             </div>
 
             <div className="grid grid-cols-1 xl:grid-cols-2 gap-12 mr-8 ml-8">
 
-                {/* BILL INFORMATIONS */}
+                {/* BILL INFORMATION */}
                 <div className="bg-white rounded-xl border shadow-sm p-8">
 
                     <h2 className="text-lg font-semibold text-gray-800 mb-4">Bill Information</h2>
@@ -69,7 +66,6 @@ export default function PrintBill() {
                             <input value={billNo} onChange={(e) => setBillNo(e.target.value)}
                                    className="w-full border rounded p-2 outline-none focus:ring-2 focus:ring-sky-300 focus:border-sky-400"/>
                         </div>
-
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-1">Cashier</label>
                             <input value={cashier} onChange={(e) => setCashier(e.target.value)}
@@ -84,29 +80,22 @@ export default function PrintBill() {
                     <h2 className="text-lg font-semibold text-gray-800 mb-4">Item Details</h2>
 
                     <div className="grid grid-cols-1 md:grid-cols-5 gap-4 items-end">
-                        {/* Item */}
                         <div className="md:col-span-2">
                             <label className="block text-sm font-medium text-gray-700 mb-1">Item</label>
-                            <input value={name} onChange={(e) => setName(e.target.value)} ref={nameInputRef}
+                            <input value={name} onChange={(e) => setName(e.target.value)} ref={itemNameInputRef}
                                    className="w-full border rounded p-2 outline-none focus:ring-2 focus:ring-sky-300 focus:border-sky-400"/>
                         </div>
-
-                        {/* Qty */}
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-1">Qty</label>
                             <input type="number" value={qty} onChange={(e) => setQty(Number(e.target.value))}
                                    className="w-full border rounded p-2 outline-none focus:ring-2 focus:ring-sky-300 focus:border-sky-400"/>
                         </div>
-
-                        {/* Unit Price */}
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-1">Unit Price</label>
                             <input type="number" value={unitPrice}
                                    onChange={(e) => setUnitPrice(Number(e.target.value))}
                                    className="w-full border rounded p-2 outline-none focus:ring-2 focus:ring-sky-300 focus:border-sky-400"/>
                         </div>
-
-                        {/* Add Button */}
                         <div>
                             <button onClick={addItem}
                                     className="w-full bg-sky-600 hover:bg-sky-700 text-white rounded-md py-2 font-medium transition outline-none">
@@ -132,23 +121,17 @@ export default function PrintBill() {
                             <tr>
                                 <td className="border p-2">Service Charge</td>
                                 <td className="border p-2 text-right">
-                                    <input
-                                        type="number"
-                                        value={serviceCharge}
-                                        onChange={(e) => setServiceCharge(Number(e.target.value))}
-                                        className="w-full text-right rounded outline-none focus:ring-2 focus:ring-sky-300 focus:border-sky-400"
-                                    />
+                                    <input type="number" value={serviceCharge}
+                                           onChange={(e) => setServiceCharge(Number(e.target.value))}
+                                           className="w-full text-right rounded outline-none focus:ring-2 focus:ring-sky-300 focus:border-sky-400"/>
                                 </td>
                             </tr>
                             <tr>
                                 <td className="border p-2">Discount</td>
                                 <td className="border p-2 text-right">
-                                    <input
-                                        type="number"
-                                        value={discount}
-                                        onChange={(e) => setDiscount(Number(e.target.value))}
-                                        className="w-full text-right rounded outline-none focus:ring-2 focus:ring-sky-300 focus:border-sky-400"
-                                    />
+                                    <input type="number" value={discount}
+                                           onChange={(e) => setDiscount(Number(e.target.value))}
+                                           className="w-full text-right rounded outline-none focus:ring-2 focus:ring-sky-300 focus:border-sky-400"/>
                                 </td>
                             </tr>
                             <tr className="font-bold text">
@@ -180,6 +163,7 @@ export default function PrintBill() {
                                     onDragStart={() => handleDragStart(index)} onDragOver={handleDragOver}
                                     onDrop={() => handleDrop(index)}
                                     className="cursor-grab active:cursor-grabbing hover:bg-gray-50">
+
                                     <td className="border p-2">
                                         {editingIndex === index ? (
                                             <input autoFocus value={item.name}
@@ -256,11 +240,11 @@ export default function PrintBill() {
                                 <div className="mt-4">
                                     <div className="flex justify-between">
                                         <span>Bill No: {billNo}</span>
-                                        <span>Date: {currentDate}</span>
+                                        <span>Date: {date}</span>
                                     </div>
                                     <div className="flex justify-between">
                                         <span>Cashier: {cashier}</span>
-                                        <span>Time: {currentTime}</span>
+                                        <span>Time: {time}</span>
                                     </div>
                                 </div>
 
@@ -321,7 +305,7 @@ export default function PrintBill() {
                                 <button onClick={downloadBill}
                                         className="w-1/3 bg-green-600 text-white py-2 rounded">Download
                                 </button>
-                                <button onClick={confirmPrint}
+                                <button onClick={printBill}
                                         className="w-1/3 bg-blue-600 text-white py-2 rounded">Print
                                 </button>
                             </div>

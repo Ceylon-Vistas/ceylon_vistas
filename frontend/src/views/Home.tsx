@@ -86,7 +86,7 @@ export default function Home() {
                     <p className="text-sm text-gray-500 mb-6">
                         Create customer invoices, preview and print bills.
                     </p>
-                    <button onClick={() => navigate("/print-bill")}
+                    <button onClick={() => navigate("/print")}
                             className="w-full bg-sky-600 hover:bg-sky-700 text-white py-3 rounded-lg font-medium transition">
                         Create Bill
                     </button>

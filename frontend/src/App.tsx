@@ -1,6 +1,6 @@
-import {BrowserRouter, Routes, Route} from "react-router-dom";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Home from "./views/Home.tsx";
-import PrintBill from "./views/PrintBill.tsx";
+import Print from "./views/Print.tsx";
 import PMS from "./views/PMS.tsx";
 
 export default function App() {
@@ -8,7 +8,7 @@ export default function App() {
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Home/>}/>
-                <Route path="/print-bill" element={<PrintBill/>}/>
+                <Route path="/print" element={<Print/>}/>
                 <Route path="/pms" element={<PMS/>}/>
             </Routes>
         </BrowserRouter>
