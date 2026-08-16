@@ -7,7 +7,7 @@ import {successNotification, errorNotification} from "../util/alert";
 import type {Bill} from "../models/Bill";
 import type {BillItem} from "../models/BillItem";
 
-export default function usePrintController() {
+export default function PrintController() {
     const [billNo, setBillNo] = useState("");
     const [cashier, setCashier] = useState("");
     const [name, setName] = useState("");
