@@ -170,7 +170,7 @@ export default function Print() {
                                                    onChange={(e) => updateItem(index, "name", e.target.value)}
                                                    className="w-full border rounded p-1 outline-none focus:ring-2 focus:ring-sky-300"/>
                                         ) : (
-                                            <div className="whitespace-normal break-words break-all">
+                                            <div className="whitespace-normal break-words">
                                                 {item.name}
                                             </div>
                                         )}
@@ -260,7 +260,7 @@ export default function Print() {
 
                                 {items.map((item, index) => (
                                     <div key={index} className="flex w-full items-start mb-1">
-                                        <span className={`w-[60%] min-w-0 whitespace-normal break-words break-all pr-1
+                                        <span className={`w-[60%] min-w-0 whitespace-normal break-words pr-1
                                             ${item.name.length > 20 ? "leading-none" : ""}`}>{item.name}
                                         </span>
                                         <span className="w-[12%] text-center shrink-0">
