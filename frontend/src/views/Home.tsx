@@ -57,7 +57,8 @@ export default function Home() {
                             </div>
                         </div>
 
-                        <div className="flex items-center gap-2 bg-green-50 border border-green-100 rounded-lg px-4 py-3">
+                        <div
+                            className="flex items-center gap-2 bg-green-50 border border-green-100 rounded-lg px-4 py-3">
                             <HiOutlineCheckCircle size={20} className="text-green-600"/>
                             <span className="text-sm font-medium text-green-700">
                                 System Online
@@ -175,7 +176,8 @@ export default function Home() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
 
                     {/* PRINT BILL */}
-                    <button onClick={() => navigate("/print")} className="group text-left border rounded-xl p-5 hover:border-sky-300 hover:bg-sky-50 hover:shadow-sm transition">
+                    <button onClick={() => navigate("/print")}
+                            className="group text-left border rounded-xl p-5 hover:border-sky-300 hover:bg-sky-50 hover:shadow-sm transition">
                         <div className="flex items-center gap-4">
                             <div className="bg-sky-100 p-3 rounded-lg group-hover:bg-sky-200 transition">
                                 <HiOutlinePrinter size={28} className="text-sky-600"/>
@@ -192,7 +194,8 @@ export default function Home() {
                     </button>
 
                     {/* INVENTORY */}
-                    <button onClick={() => navigate("/inventory")} className="group text-left border rounded-xl p-5 hover:border-purple-300 hover:bg-purple-50 hover:shadow-sm transition">
+                    <button onClick={() => navigate("/inventory")}
+                            className="group text-left border rounded-xl p-5 hover:border-purple-300 hover:bg-purple-50 hover:shadow-sm transition">
                         <div className="flex items-center gap-4">
                             <div className="bg-purple-100 p-3 rounded-lg group-hover:bg-purple-200 transition">
                                 <HiOutlineCube size={28} className="text-purple-600"/>
@@ -209,7 +212,8 @@ export default function Home() {
                     </button>
 
                     {/* PMS */}
-                    <button onClick={() => navigate("/pms")} className="group text-left border rounded-xl p-5 hover:border-blue-300 hover:bg-blue-50 hover:shadow-sm transition">
+                    <button onClick={() => navigate("/pms")}
+                            className="group text-left border rounded-xl p-5 hover:border-blue-300 hover:bg-blue-50 hover:shadow-sm transition">
                         <div className="flex items-center gap-4">
                             <div className="bg-blue-100 p-3 rounded-lg group-hover:bg-blue-200 transition">
                                 <HiOutlineHome size={28} className="text-blue-600"/>
@@ -226,7 +230,8 @@ export default function Home() {
                     </button>
 
                     {/* REPORTS */}
-                    <button className="group text-left border rounded-xl p-5 hover:border-green-300 hover:bg-green-50 hover:shadow-sm transition">
+                    <button
+                        className="group text-left border rounded-xl p-5 hover:border-green-300 hover:bg-green-50 hover:shadow-sm transition">
                         <div className="flex items-center gap-4">
                             <div className="bg-green-100 p-3 rounded-lg group-hover:bg-green-200 transition">
                                 <HiOutlineChartBar size={28} className="text-green-600"/>
@@ -248,7 +253,7 @@ export default function Home() {
             {/* ================= MAIN CONTENT ================= */}
             <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 mb-6">
 
-                {/* ================= RECENT BILLS ================= */}
+                {/* RECENT BILLS */}
                 <div className="xl:col-span-2 bg-white rounded-xl border shadow-sm">
 
                     <div className="flex items-center justify-between p-6 border-b">
@@ -303,7 +308,8 @@ export default function Home() {
                                     LKR 8,500
                                 </td>
                                 <td className="px-6 py-4 text-center">
-                                    <span className="inline-flex items-center gap-1 px-3 py-1 text-xs font-medium text-green-700 bg-green-50 rounded-full">
+                                    <span
+                                        className="inline-flex items-center gap-1 px-3 py-1 text-xs font-medium text-green-700 bg-green-50 rounded-full">
                                         <HiOutlineCheckCircle size={14}/>Paid
                                     </span>
                                 </td>
@@ -323,7 +329,8 @@ export default function Home() {
                                     LKR 12,400
                                 </td>
                                 <td className="px-6 py-4 text-center">
-                                    <span className="inline-flex items-center gap-1 px-3 py-1 text-xs font-medium text-green-700 bg-green-50 rounded-full">
+                                    <span
+                                        className="inline-flex items-center gap-1 px-3 py-1 text-xs font-medium text-green-700 bg-green-50 rounded-full">
                                         <HiOutlineCheckCircle size={14}/>Paid
                                     </span>
                                 </td>
@@ -343,7 +350,8 @@ export default function Home() {
                                     LKR 5,750
                                 </td>
                                 <td className="px-6 py-4 text-center">
-                                    <span className="inline-flex items-center gap-1 px-3 py-1 text-xs font-medium text-orange-700 bg-orange-50 rounded-full">
+                                    <span
+                                        className="inline-flex items-center gap-1 px-3 py-1 text-xs font-medium text-orange-700 bg-orange-50 rounded-full">
                                         Pending
                                     </span>
                                 </td>
@@ -353,111 +361,76 @@ export default function Home() {
                     </div>
                 </div>
 
-                {/* ================= SALES OVERVIEW ================= */}
+                {/* SALES OVERVIEW */}
                 <div className="bg-white rounded-xl border shadow-sm p-6">
 
                     <div className="flex items-center justify-between mb-6">
-
                         <div>
                             <h2 className="text-lg font-semibold text-gray-800">
                                 Sales Overview
                             </h2>
-
                             <p className="text-sm text-gray-500 mt-1">
                                 Today's performance
                             </p>
                         </div>
-
-                        <HiOutlineChartBar
-                            size={24}
-                            className="text-sky-600"
-                        />
-
+                        <HiOutlineChartBar size={24} className="text-sky-600"/>
                     </div>
 
-
                     <div className="space-y-5">
-
                         <div>
                             <div className="flex justify-between mb-2">
                                 <span className="text-sm text-gray-600">
                                     Food & Beverage
                                 </span>
-
                                 <span className="text-sm font-semibold text-gray-800">
                                     LKR 32,500
                                 </span>
                             </div>
-
                             <div className="w-full bg-gray-100 rounded-full h-2">
-                                <div
-                                    className="bg-sky-500 h-2 rounded-full"
-                                    style={{width: "65%"}}
-                                />
+                                <div className="bg-sky-500 h-2 rounded-full" style={{width: "65%"}}/>
                             </div>
                         </div>
-
 
                         <div>
                             <div className="flex justify-between mb-2">
                                 <span className="text-sm text-gray-600">
                                     Rooms
                                 </span>
-
                                 <span className="text-sm font-semibold text-gray-800">
                                     LKR 12,000
                                 </span>
                             </div>
-
                             <div className="w-full bg-gray-100 rounded-full h-2">
-                                <div
-                                    className="bg-purple-500 h-2 rounded-full"
-                                    style={{width: "40%"}}
-                                />
+                                <div className="bg-purple-500 h-2 rounded-full" style={{width: "40%"}}/>
                             </div>
                         </div>
-
 
                         <div>
                             <div className="flex justify-between mb-2">
                                 <span className="text-sm text-gray-600">
                                     Other
                                 </span>
-
                                 <span className="text-sm font-semibold text-gray-800">
                                     LKR 5,500
                                 </span>
                             </div>
-
                             <div className="w-full bg-gray-100 rounded-full h-2">
-                                <div
-                                    className="bg-green-500 h-2 rounded-full"
-                                    style={{width: "25%"}}
-                                />
+                                <div className="bg-green-500 h-2 rounded-full" style={{width: "25%"}}/>
                             </div>
                         </div>
-
                     </div>
 
-
                     <div className="border-t mt-6 pt-5">
-
                         <div className="flex justify-between items-center">
-
                             <span className="text-sm text-gray-500">
                                 Total Sales
                             </span>
-
                             <span className="text-xl font-bold text-gray-800">
                                 LKR 50,000
                             </span>
-
                         </div>
-
                     </div>
-
                 </div>
-
             </div>
 
             {/* ================= BOTTOM SECTION ================= */}
@@ -467,114 +440,84 @@ export default function Home() {
                 <div className="bg-white rounded-xl border shadow-sm p-6">
 
                     <div className="flex items-center justify-between mb-5">
-
                         <div>
                             <h2 className="font-semibold text-gray-800">
                                 Low Stock Items
                             </h2>
-
                             <p className="text-xs text-gray-500 mt-1">
                                 Items that need attention
                             </p>
                         </div>
-
-                        <HiOutlineExclamation
-                            size={22}
-                            className="text-orange-500"
-                        />
-
+                        <HiOutlineExclamation size={22} className="text-orange-500"/>
                     </div>
 
-
                     <div className="space-y-4">
-
                         <div className="flex justify-between items-center">
                             <div>
                                 <p className="text-sm font-medium text-gray-700">
                                     Coca Cola
                                 </p>
-
                                 <p className="text-xs text-gray-400">
                                     Beverage
                                 </p>
                             </div>
-
                             <span className="text-xs font-medium text-red-600 bg-red-50 px-2 py-1 rounded">
                                 3 left
                             </span>
                         </div>
-
 
                         <div className="flex justify-between items-center">
                             <div>
                                 <p className="text-sm font-medium text-gray-700">
                                     Mineral Water
                                 </p>
-
                                 <p className="text-xs text-gray-400">
                                     Beverage
                                 </p>
                             </div>
-
                             <span className="text-xs font-medium text-orange-600 bg-orange-50 px-2 py-1 rounded">
                                 5 left
                             </span>
                         </div>
-
 
                         <div className="flex justify-between items-center">
                             <div>
                                 <p className="text-sm font-medium text-gray-700">
                                     Chicken
                                 </p>
-
                                 <p className="text-xs text-gray-400">
                                     Kitchen
                                 </p>
                             </div>
-
                             <span className="text-xs font-medium text-orange-600 bg-orange-50 px-2 py-1 rounded">
                                 7 kg
                             </span>
                         </div>
-
                     </div>
-
                 </div>
-
 
                 {/* SYSTEM STATUS */}
                 <div className="bg-white rounded-xl border shadow-sm p-6">
 
                     <div className="flex items-center gap-3 mb-5">
-
                         <div className="bg-green-50 p-3 rounded-lg">
-                            <HiOutlineCheckCircle
-                                size={24}
-                                className="text-green-600"
-                            />
+                            <HiOutlineCheckCircle size={24} className="text-green-600"/>
                         </div>
-
                         <div>
                             <h2 className="font-semibold text-gray-800">
                                 System Status
                             </h2>
-
                             <p className="text-xs text-gray-500">
                                 Current system services
                             </p>
                         </div>
-
                     </div>
 
-
                     <div className="space-y-4">
-
                         <div className="flex justify-between">
                             <span className="text-sm text-gray-600">
                                 Database
                             </span>
-
                             <span className="text-sm font-medium text-green-600">
                                 Connected
                             </span>
@@ -584,7 +527,6 @@ export default function Home() {
                             <span className="text-sm text-gray-600">
                                 Printer
                             </span>
-
                             <span className="text-sm font-medium text-green-600">
                                 Ready
                             </span>
@@ -594,39 +536,28 @@ export default function Home() {
                             <span className="text-sm text-gray-600">
                                 POS Server
                             </span>
-
                             <span className="text-sm font-medium text-green-600">
                                 Online
                             </span>
                         </div>
-
                     </div>
-
                 </div>
-
 
                 {/* TODAY SUMMARY */}
                 <div className="bg-white rounded-xl border shadow-sm p-6">
 
                     <div className="flex items-center gap-3 mb-5">
-
                         <div className="bg-sky-50 p-3 rounded-lg">
-                            <HiOutlineDocumentText
-                                size={24}
-                                className="text-sky-600"
-                            />
+                            <HiOutlineDocumentText size={24} className="text-sky-600"/>
                         </div>
-
                         <div>
                             <h2 className="font-semibold text-gray-800">
                                 Today's Summary
                             </h2>
-
                             <p className="text-xs text-gray-500">
                                 Business activity
                             </p>
                         </div>
-
                     </div>
 
 
@@ -636,7 +567,6 @@ export default function Home() {
                             <span className="text-sm text-gray-600">
                                 Total Transactions
                             </span>
-
                             <span className="font-semibold text-gray-800">
                                 10
                             </span>
@@ -646,7 +576,6 @@ export default function Home() {
                             <span className="text-sm text-gray-600">
                                 Average Bill
                             </span>
-
                             <span className="font-semibold text-gray-800">
                                 LKR 5,000
                             </span>
@@ -656,48 +585,37 @@ export default function Home() {
                             <span className="text-sm text-gray-600">
                                 Current Time
                             </span>
-
                             <span className="font-semibold text-gray-800">
                                 {formattedTime}
                             </span>
                         </div>
 
                     </div>
-
                 </div>
-
             </div>
 
             {/* ================= FOOTER ================= */}
             <div className="mt-6 bg-white border rounded-xl px-6 py-4">
 
                 <div className="flex flex-col md:flex-row items-center justify-between gap-3">
-
                     <p className="text-sm text-gray-500">
                         POS Management System
                     </p>
-
                     <div className="flex items-center gap-5 text-sm text-gray-400">
-
                         <span className="flex items-center gap-1">
                             <HiOutlineCollection size={16}/>
                             Inventory
                         </span>
-
                         <span className="flex items-center gap-1">
                             <HiOutlinePrinter size={16}/>
                             Billing
                         </span>
-
                         <span className="flex items-center gap-1">
                             <HiOutlineCog size={16}/>
                             System
                         </span>
-
                     </div>
-
                 </div>
-
             </div>
         </div>
     );
