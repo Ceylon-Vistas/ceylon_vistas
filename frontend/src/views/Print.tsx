@@ -1,7 +1,10 @@
+import {useState} from "react";
 import {HiOutlineTrash} from "react-icons/hi";
 import usePrintController from "../controllers/PrintController.ts";
 
 export default function Print() {
+    const [showDownloadOptions, setShowDownloadOptions] = useState(false);
+
     const {
         billNo,
         cashier,
@@ -302,9 +305,31 @@ export default function Print() {
                                 <button onClick={() => setShowPreview(false)}
                                         className="w-1/3 bg-gray-400 text-white py-2 rounded">Cancel
                                 </button>
-                                <button onClick={downloadBill}
-                                        className="w-1/3 bg-green-600 text-white py-2 rounded">Download
-                                </button>
+
+                                <div className="w-1/3 relative">
+                                    <button onClick={() => setShowDownloadOptions(!showDownloadOptions)}
+                                            className="w-full bg-green-600 text-white py-2 rounded">
+                                        Download
+                                    </button>
+                                    {showDownloadOptions && (
+                                        <div
+                                            className="absolute bottom-full mb-2 left-0 w-full bg-white border rounded shadow-lg overflow-hidden z-50">
+                                            <button onClick={() => {
+                                                downloadBill("pdf");
+                                                setShowDownloadOptions(false);
+                                            }} className="w-full px-4 py-2 text-left hover:bg-gray-100 border-b">
+                                                PDF
+                                            </button>
+                                            <button onClick={() => {
+                                                downloadBill("png");
+                                                setShowDownloadOptions(false);
+                                            }} className="w-full px-4 py-2 text-left hover:bg-gray-100">
+                                                PNG
+                                            </button>
+                                        </div>
+                                    )}
+                                </div>
+
                                 <button onClick={printBill}
                                         className="w-1/3 bg-blue-600 text-white py-2 rounded">Print
                                 </button>

@@ -140,7 +140,7 @@ export default function PrintController() {
         total
     };
 
-    const downloadBill = async () => {
+    const downloadBill = async (format: "pdf" | "png") => {
         if (!previewRef.current) return;
 
         const canvas = await html2canvas(previewRef.current, {
@@ -149,6 +149,47 @@ export default function PrintController() {
             useCORS: true
         });
 
+        // PNG DOWNLOAD
+        if (format === "png") {
+            const padding = 30;
+            const scale = 0.7;
+
+            const newWidth = canvas.width * scale;
+            const newHeight = canvas.height * scale;
+
+            const pngCanvas = document.createElement("canvas");
+
+            pngCanvas.width = newWidth + padding * 2;
+            pngCanvas.height = newHeight + padding * 2;
+
+            const ctx = pngCanvas.getContext("2d");
+
+            if (ctx) {
+                ctx.fillStyle = "#ffffff";
+                ctx.fillRect(
+                    0,
+                    0,
+                    pngCanvas.width,
+                    pngCanvas.height
+                );
+
+                ctx.drawImage(
+                    canvas,
+                    padding,
+                    padding,
+                    newWidth,
+                    newHeight
+                );
+            }
+
+            const link = document.createElement("a");
+            link.download = `${billNo}.png`;
+            link.href = pngCanvas.toDataURL("image/png");
+            link.click();
+            return;
+        }
+
+        // PDF DOWNLOAD
         const imgData = canvas.toDataURL("image/png");
 
         const pdfWidth = 105;
