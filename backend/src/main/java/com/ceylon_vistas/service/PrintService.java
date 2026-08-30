@@ -18,7 +18,7 @@ public class PrintService {
     @Autowired
     private PrinterConfig printerConfig;
 
-    private boolean debug = false;
+    private boolean debug = true;
 
     public void print(BillDTO dto) {
         if (debug) {
