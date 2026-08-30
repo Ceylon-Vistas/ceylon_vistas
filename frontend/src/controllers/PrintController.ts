@@ -9,7 +9,6 @@ import type {BillItem} from "../models/BillItem";
 
 export default function PrintController() {
     const [billNo, setBillNo] = useState("");
-    const [cashier, setCashier] = useState("");
     const [name, setName] = useState("");
     const [qty, setQty] = useState(1);
     const [unitPrice, setUnitPrice] = useState(0);
@@ -114,12 +113,6 @@ export default function PrintController() {
 
     const now = new Date();
     const date = now.toISOString().split("T")[0];
-    const time = now.toLocaleTimeString("en-US", {
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-        hour12: true
-    }).replace(/\s+(AM|PM)$/, "$1");
 
     const subTotal = items.reduce(
         (sum, item) => sum + item.total,
@@ -130,9 +123,7 @@ export default function PrintController() {
 
     const bill: Bill = {
         billNo,
-        cashier,
         date,
-        time,
         items,
         subTotal,
         serviceCharge,
@@ -229,9 +220,7 @@ export default function PrintController() {
 
     return {
         billNo,
-        cashier,
         date,
-        time,
         name,
         qty,
         unitPrice,
@@ -247,7 +236,6 @@ export default function PrintController() {
         itemNameInputRef,
 
         setBillNo,
-        setCashier,
         setName,
         setQty,
         setUnitPrice,

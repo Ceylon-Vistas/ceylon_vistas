@@ -15,7 +15,6 @@ public class Bill {
     private Long id;
 
     private String billNo;
-    private String cashier;
     private String date;
     private String time;
     private double subTotal;

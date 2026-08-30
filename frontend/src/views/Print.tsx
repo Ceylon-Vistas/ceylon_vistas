@@ -7,9 +7,7 @@ export default function Print() {
 
     const {
         billNo,
-        cashier,
         date,
-        time,
         name,
         qty,
         unitPrice,
@@ -25,7 +23,6 @@ export default function Print() {
         itemNameInputRef,
 
         setBillNo,
-        setCashier,
         setName,
         setQty,
         setUnitPrice,
@@ -67,11 +64,6 @@ export default function Print() {
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-1">Bill No</label>
                             <input value={billNo} onChange={(e) => setBillNo(e.target.value)}
-                                   className="w-full border rounded p-2 outline-none focus:ring-2 focus:ring-sky-300 focus:border-sky-400"/>
-                        </div>
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Cashier</label>
-                            <input value={cashier} onChange={(e) => setCashier(e.target.value)}
                                    className="w-full border rounded p-2 outline-none focus:ring-2 focus:ring-sky-300 focus:border-sky-400"/>
                         </div>
                     </div>
@@ -244,10 +236,6 @@ export default function Print() {
                                     <div className="flex justify-between">
                                         <span>Bill No: {billNo}</span>
                                         <span>Date: {date}</span>
-                                    </div>
-                                    <div className="flex justify-between">
-                                        <span>Cashier: {cashier}</span>
-                                        <span>Time: {time}</span>
                                     </div>
                                 </div>
 

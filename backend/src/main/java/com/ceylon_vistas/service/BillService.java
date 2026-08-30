@@ -8,6 +8,8 @@ import com.ceylon_vistas.repository.BillRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,8 +24,7 @@ public class BillService {
         Bill bill = new Bill();
         bill.setBillNo(dto.getBillNo());
         bill.setDate(dto.getDate());
-        bill.setTime(dto.getTime());
-        bill.setCashier(dto.getCashier());
+        bill.setTime(LocalTime.now().format(DateTimeFormatter.ofPattern("hh:mm:ssa")));
         bill.setSubTotal(dto.getSubTotal());
         bill.setServiceCharge(dto.getServiceCharge());
         bill.setDiscount(dto.getDiscount());

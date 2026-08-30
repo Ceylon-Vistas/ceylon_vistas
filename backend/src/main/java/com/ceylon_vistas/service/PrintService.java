@@ -18,7 +18,7 @@ public class PrintService {
     @Autowired
     private PrinterConfig printerConfig;
 
-    private boolean debug = true;
+    private boolean debug = false;
 
     public void print(BillDTO dto) {
         if (debug) {
@@ -28,7 +28,6 @@ public class PrintService {
             sb.append(center("ceylonvistas@gmail.com")).append("\n");
             sb.append(center("077 002 9960")).append("\n\n");
             sb.append(leftRight("Bill No: " + dto.getBillNo(), "Date: " + dto.getDate())).append("\n");
-            sb.append(leftRight("Cashier: " + dto.getCashier(), "Time: " + dto.getTime())).append("\n");
 
             sb.append("-----------------------------------------------\n");
 
@@ -86,7 +85,6 @@ public class PrintService {
 
                 StringBuilder sb = new StringBuilder();
                 sb.append(leftRight("Bill No: " + dto.getBillNo(), "Date: " + dto.getDate())).append("\n");
-                sb.append(leftRight("Cashier: " + dto.getCashier(), "Time: " + dto.getTime())).append("\n");
 
                 sb.append("-----------------------------------------------\n");
 
