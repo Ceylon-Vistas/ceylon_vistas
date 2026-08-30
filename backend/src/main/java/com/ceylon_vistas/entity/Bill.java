@@ -14,7 +14,9 @@ public class Bill {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false, unique = true)
     private String billNo;
+
     private String date;
     private String time;
     private double subTotal;

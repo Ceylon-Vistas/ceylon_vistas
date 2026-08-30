@@ -41,6 +41,21 @@ export default function PrintController() {
         };
     }, [editingIndex]);
 
+    useEffect(() => {
+        loadNextBillNo();
+    }, []);
+
+    const loadNextBillNo = async () => {
+        try {
+            const response = await axios.get(
+                `${BASE_URL}/bill/next-no`
+            );
+            setBillNo(response.data);
+        } catch (error: any) {
+            errorNotification("Failed to generate Bill No");
+        }
+    };
+
     const addItem = () => {
         if (!name || qty <= 0 || unitPrice <= 0) {
             errorNotification("Please enter valid item details");
@@ -210,7 +225,8 @@ export default function PrintController() {
 
     const printBill = async () => {
         try {
-            const response = await axios.post(`${BASE_URL}/print`, bill);
+            const response = await axios.post(`${BASE_URL}/print/print-bill`, bill);
+            loadNextBillNo();
             successNotification(response.data);
             setShowPreview(false);
         } catch (error: any) {
@@ -235,7 +251,6 @@ export default function PrintController() {
         editingRowRef,
         itemNameInputRef,
 
-        setBillNo,
         setName,
         setQty,
         setUnitPrice,

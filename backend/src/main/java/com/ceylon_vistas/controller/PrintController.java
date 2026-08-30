@@ -17,7 +17,7 @@ public class PrintController {
     @Autowired
     private PrintService printService;
 
-    @PostMapping
+    @PostMapping("/print-bill")
     public String print(@RequestBody BillDTO dto) {
         billService.save(dto);
         printService.print(dto);

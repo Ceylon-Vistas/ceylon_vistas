@@ -8,6 +8,7 @@ import com.ceylon_vistas.repository.BillRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -43,5 +44,33 @@ public class BillService {
 
         bill.setItems(billItems);
         return billRepository.save(bill);
+    }
+
+    public String generateBillNo(String date) {
+        LocalDate billDate = LocalDate.parse(date);
+        String datePart = billDate.format(DateTimeFormatter.ofPattern("MMddyy"));
+
+        List<Bill> bills = billRepository.findByDate(date);
+        int highestOrderNumber = 0;
+        for (Bill bill : bills) {
+            String billNo = bill.getBillNo();
+            if (billNo == null || !billNo.startsWith("B-")) {
+                continue;
+            }
+
+            try {
+                String numberAndDate = billNo.substring(2);
+                String numberPart = numberAndDate.substring(0, numberAndDate.length() - 6);
+                int orderNumber = Integer.parseInt(numberPart);
+                if (orderNumber > highestOrderNumber) {
+                    highestOrderNumber = orderNumber;
+                }
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
+        int nextOrderNumber = highestOrderNumber + 1;
+        return String.format("B-%02d%s", nextOrderNumber, datePart);
     }
 }

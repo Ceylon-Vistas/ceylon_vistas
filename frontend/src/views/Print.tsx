@@ -22,7 +22,6 @@ export default function Print() {
         editingRowRef,
         itemNameInputRef,
 
-        setBillNo,
         setName,
         setQty,
         setUnitPrice,
@@ -86,17 +85,41 @@ export default function Print() {
                     </div>
                 </div>
 
-                {/* BILL INFORMATION */}
+                {/* BILL SUMMERY */}
                 <div className="bg-white rounded-xl border shadow-sm p-8">
+                    <h2 className="text-lg font-semibold text-gray-800 mb-4">
+                        Bill Summary
+                    </h2>
 
-                    <h2 className="text-lg font-semibold text-gray-800 mb-4">Bill Information</h2>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Bill No</label>
-                            <input value={billNo} onChange={(e) => setBillNo(e.target.value)}
-                                   className="w-full border rounded p-2 outline-none focus:ring-2 focus:ring-sky-300 focus:border-sky-400"/>
-                        </div>
+                    <div className="rounded-lg overflow-hidden border">
+                        <table className="w-full border table-fixed">
+                            <tbody>
+                            <tr>
+                                <td className="border p-2">Sub Total</td>
+                                <td className="border p-2 text-right">{subTotal.toFixed(2)}</td>
+                            </tr>
+                            <tr>
+                                <td className="border p-2">Service Charge</td>
+                                <td className="border p-2 text-right">
+                                    <input type="number" value={serviceCharge}
+                                           onChange={(e) => setServiceCharge(Number(e.target.value))}
+                                           className="w-full text-right rounded outline-none focus:ring-2 focus:ring-sky-300 focus:border-sky-400"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td className="border p-2">Discount</td>
+                                <td className="border p-2 text-right">
+                                    <input type="number" value={discount}
+                                           onChange={(e) => setDiscount(Number(e.target.value))}
+                                           className="w-full text-right rounded outline-none focus:ring-2 focus:ring-sky-300 focus:border-sky-400"/>
+                                </td>
+                            </tr>
+                            <tr className="font-bold text">
+                                <td className="border p-2">Total</td>
+                                <td className="border p-2 text-right">{total.toFixed(2)}</td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
 
@@ -170,44 +193,6 @@ export default function Print() {
                         }
                         </tbody>
                     </table>
-                </div>
-
-                {/* BILL SUMMERY */}
-                <div className="bg-white rounded-xl border shadow-sm p-8">
-                    <h2 className="text-lg font-semibold text-gray-800 mb-4">
-                        Bill Summary
-                    </h2>
-
-                    <div className="rounded-lg overflow-hidden border">
-                        <table className="w-full border table-fixed">
-                            <tbody>
-                            <tr>
-                                <td className="border p-2">Sub Total</td>
-                                <td className="border p-2 text-right">{subTotal.toFixed(2)}</td>
-                            </tr>
-                            <tr>
-                                <td className="border p-2">Service Charge</td>
-                                <td className="border p-2 text-right">
-                                    <input type="number" value={serviceCharge}
-                                           onChange={(e) => setServiceCharge(Number(e.target.value))}
-                                           className="w-full text-right rounded outline-none focus:ring-2 focus:ring-sky-300 focus:border-sky-400"/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td className="border p-2">Discount</td>
-                                <td className="border p-2 text-right">
-                                    <input type="number" value={discount}
-                                           onChange={(e) => setDiscount(Number(e.target.value))}
-                                           className="w-full text-right rounded outline-none focus:ring-2 focus:ring-sky-300 focus:border-sky-400"/>
-                                </td>
-                            </tr>
-                            <tr className="font-bold text">
-                                <td className="border p-2">Total</td>
-                                <td className="border p-2 text-right">{total.toFixed(2)}</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
                 </div>
 
             </div>
