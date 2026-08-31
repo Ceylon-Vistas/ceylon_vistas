@@ -52,81 +52,91 @@ export default function Print() {
                 </h1>
             </div>
 
-            <div className="grid grid-cols-1 xl:grid-cols-2 gap-12 mr-8 ml-8">
+            <div className="grid grid-cols-1 xl:grid-cols-2 gap-8 mr-8 ml-8">
+                <div className="flex flex-col gap-8">
 
-                {/* ITEM DETAILS */}
-                <div className="bg-white rounded-xl border shadow-sm p-8">
+                    {/* ITEM DETAILS */}
+                    <div className="bg-white rounded-xl border shadow-sm p-8 h-[180px]">
 
-                    <h2 className="text-lg font-semibold text-gray-800 mb-4">Item Details</h2>
+                        <h2 className="text-lg font-semibold text-gray-800 mb-4">Item Details</h2>
 
-                    <div className="grid grid-cols-1 md:grid-cols-5 gap-4 items-end">
-                        <div className="md:col-span-2">
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Item</label>
-                            <input value={name} onChange={(e) => setName(e.target.value)} ref={itemNameInputRef}
-                                   className="w-full border rounded p-2 outline-none focus:ring-2 focus:ring-sky-300 focus:border-sky-400"/>
-                        </div>
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Qty</label>
-                            <input type="number" value={qty} onChange={(e) => setQty(Number(e.target.value))}
-                                   className="w-full border rounded p-2 outline-none focus:ring-2 focus:ring-sky-300 focus:border-sky-400"/>
-                        </div>
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Unit Price</label>
-                            <input type="number" value={unitPrice}
-                                   onChange={(e) => setUnitPrice(Number(e.target.value))}
-                                   className="w-full border rounded p-2 outline-none focus:ring-2 focus:ring-sky-300 focus:border-sky-400"/>
-                        </div>
-                        <div>
-                            <button onClick={addItem}
-                                    className="w-full bg-sky-600 hover:bg-sky-700 text-white rounded-md py-2 font-medium transition outline-none">
-                                Add Item
-                            </button>
+                        <div className="grid grid-cols-1 md:grid-cols-5 gap-4 items-end">
+                            <div className="md:col-span-2">
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Item</label>
+                                <input value={name} onChange={(e) => setName(e.target.value)} ref={itemNameInputRef}
+                                       className="w-full border rounded p-2 outline-none focus:ring-2 focus:ring-sky-300 focus:border-sky-400"/>
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Qty</label>
+                                <input type="number" value={qty} onChange={(e) => setQty(Number(e.target.value))}
+                                       className="w-full border rounded p-2 outline-none focus:ring-2 focus:ring-sky-300 focus:border-sky-400"/>
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Unit Price</label>
+                                <input type="number" value={unitPrice}
+                                       onChange={(e) => setUnitPrice(Number(e.target.value))}
+                                       className="w-full border rounded p-2 outline-none focus:ring-2 focus:ring-sky-300 focus:border-sky-400"/>
+                            </div>
+                            <div>
+                                <button onClick={addItem}
+                                        className="w-full bg-sky-600 hover:bg-sky-700 text-white rounded-md py-2 font-medium transition outline-none">
+                                    Add Item
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                {/* BILL SUMMERY */}
-                <div className="bg-white rounded-xl border shadow-sm p-8">
-                    <h2 className="text-lg font-semibold text-gray-800 mb-4">
-                        Bill Summary
-                    </h2>
+                    {/* BILL SUMMERY */}
+                    <div className="bg-white rounded-xl border shadow-sm p-8">
+                        <h2 className="text-lg font-semibold text-gray-800 mb-4">
+                            Bill Summary
+                        </h2>
 
-                    <div className="rounded-lg overflow-hidden border">
-                        <table className="w-full border table-fixed">
-                            <tbody>
-                            <tr>
-                                <td className="border p-2">Sub Total</td>
-                                <td className="border p-2 text-right">{subTotal.toFixed(2)}</td>
-                            </tr>
-                            <tr>
-                                <td className="border p-2">Service Charge</td>
-                                <td className="border p-2 text-right">
-                                    <input type="number" value={serviceCharge}
-                                           onChange={(e) => setServiceCharge(Number(e.target.value))}
-                                           className="w-full text-right rounded outline-none focus:ring-2 focus:ring-sky-300 focus:border-sky-400"/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td className="border p-2">Discount</td>
-                                <td className="border p-2 text-right">
-                                    <input type="number" value={discount}
-                                           onChange={(e) => setDiscount(Number(e.target.value))}
-                                           className="w-full text-right rounded outline-none focus:ring-2 focus:ring-sky-300 focus:border-sky-400"/>
-                                </td>
-                            </tr>
-                            <tr className="font-bold text">
-                                <td className="border p-2">Total</td>
-                                <td className="border p-2 text-right">{total.toFixed(2)}</td>
-                            </tr>
-                            </tbody>
-                        </table>
+                        <div className="rounded-lg overflow-hidden border">
+                            <table className="w-full border table-fixed">
+                                <tbody>
+                                <tr>
+                                    <td className="border p-2">Sub Total</td>
+                                    <td className="border p-2 text-right">{subTotal.toFixed(2)}</td>
+                                </tr>
+                                <tr>
+                                    <td className="border p-2">Service Charge</td>
+                                    <td className="border p-2 text-right">
+                                        <input type="number" value={serviceCharge}
+                                               onChange={(e) => setServiceCharge(Number(e.target.value))}
+                                               className="w-full text-right rounded outline-none focus:ring-2 focus:ring-sky-300 focus:border-sky-400"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td className="border p-2">Discount</td>
+                                    <td className="border p-2 text-right">
+                                        <input type="number" value={discount}
+                                               onChange={(e) => setDiscount(Number(e.target.value))}
+                                               className="w-full text-right rounded outline-none focus:ring-2 focus:ring-sky-300 focus:border-sky-400"/>
+                                    </td>
+                                </tr>
+                                <tr className="font-bold text">
+                                    <td className="border p-2">Total</td>
+                                    <td className="border p-2 text-right">{total.toFixed(2)}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    {/* PREVIEW BUTTON */}
+                    <div className="flex">
+                        <button onClick={() => setShowPreview(true)}
+                                className="ml-[35%] px-10 py-3 rounded-md bg-sky-600 hover:bg-sky-700 text-white font-medium shadow transition outline-none">
+                            Preview Invoice
+                        </button>
                     </div>
                 </div>
 
                 {/* ITEM TABLE */}
-                <div className="bg-white rounded-xl border shadow-sm p-8 overflow-hidden">
+                <div className="bg-white border shadow-sm max-h-[570px] overflow-y-auto">
                     <table className="w-full">
-                        <thead className="bg-gray-200">
+                        <thead className="bg-gray-200 sticky -top-[1px]">
                         <tr>
                             <th className="border p-2">Item</th>
                             <th className="border p-2 w-[15%]">Qty</th>
@@ -195,14 +205,6 @@ export default function Print() {
                     </table>
                 </div>
 
-            </div>
-
-            {/* PREVIEW BUTTON */}
-            <div className="flex justify-center mt-7">
-                <button onClick={() => setShowPreview(true)}
-                        className="px-10 py-3 rounded-md bg-sky-600 hover:bg-sky-700 text-white font-medium shadow transition outline-none">
-                    Preview Invoice
-                </button>
             </div>
 
             {/* PREVIEW MODAL */}
